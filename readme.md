@@ -1,4 +1,4 @@
-# Laravel School Management System (LSMS)
+# School Management System (LSMS)
 
 A full-featured school management system built with Laravel 8, designed for educational institutions such as schools and colleges. It supports role-based access control with seven distinct user types, comprehensive academic management, finance tracking, library management, and PDF report generation.
 
