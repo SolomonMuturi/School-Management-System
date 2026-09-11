@@ -8,7 +8,7 @@ A full-featured school management system built with Laravel 8, designed for educ
 
 | Dashboard | Login | Marksheet |
 |-----------|-------|-----------|
-| ![Dashboard](https://i.ibb.co/D4T0z6T/dashboard.png) | ![Login](https://i.ibb.co/Rh1Bfwk/login.png) | ![Marksheet](https://i.ibb.co/GCgv5ZR/marksheet.png) |
+| ![Dashboard](https://i.ibb.co/D4T0z6T/dashboard.png) | ![Login](https://i.ibb.co/Rh1Bfwk/login.png) |
 
 | System Settings | Print Marksheet | Tabulation Sheet |
 |-----------------|-----------------|------------------|
