@@ -210,13 +210,13 @@ After seeding, use any of the following accounts to log in:
 
 | Account Type | Username | Email | Password |
 |-------------|----------|-------|----------|
-| Super Admin | `cj` | `cj@cj.com` | `cj` |
-| Admin | `admin` | `admin@admin.com` | `cj` |
-| Teacher | `teacher` | `teacher@teacher.com` | `cj` |
-| Student | `student` | `student@student.com` | `cj` |
-| Parent | `parent` | `parent@parent.com` | `cj` |
-| Accountant | `accountant` | `accountant@accountant.com` | `cj` |
-| Librarian | `librarian` | `librarian@librarian.com` | `cj` |
+| Super Admin | `solomon` | `solomon@solomon.com` | `solomon` |
+| Admin | `admin` | `admin@admin.com` | `solomon` |
+| Teacher | `teacher` | `teacher@teacher.com` | `solomon` |
+| Student | `student` | `student@student.com` | `solomon` |
+| Parent | `parent` | `parent@parent.com` | `solomon` |
+| Accountant | `accountant` | `accountant@accountant.com` | `solomon` |
+| Librarian | `librarian` | `librarian@librarian.com` | `solomon` |
 
 > **Important:** Change these default credentials before deploying to production.
 
@@ -284,3 +284,5 @@ Or with PHPUnit directly:
 If you discover a security vulnerability, please report it responsibly. Do not open public GitHub issues for security-related concerns.
 
 ---
+
+Created by **Solitech International** — Solomon Muturi
