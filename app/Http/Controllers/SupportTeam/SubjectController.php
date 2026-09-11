@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SupportTeam;
 use App\Helpers\Qs;
 use App\Http\Requests\Subject\SubjectCreate;
 use App\Http\Requests\Subject\SubjectUpdate;
+use App\Models\Subject;
 use App\Repositories\MyClassRepo;
 use App\Repositories\UserRepo;
 use App\Http\Controllers\Controller;
@@ -15,7 +16,7 @@ class SubjectController extends Controller
 
     public function __construct(MyClassRepo $my_class, UserRepo $user)
     {
-        $this->middleware('teamSA', ['except' => ['destroy',] ]);
+        $this->middleware('teamSA', ['except' => ['destroy', 'dashboard', 'show'] ]);
         $this->middleware('super_admin', ['only' => ['destroy',] ]);
 
         $this->my_class = $my_class;
@@ -29,6 +30,33 @@ class SubjectController extends Controller
         $d['subjects'] = $this->my_class->getAllSubjects();
 
         return view('pages.support_team.subjects.index', $d);
+    }
+
+    public function dashboard()
+    {
+        $subjects = $this->my_class->getAllSubjects();
+
+        $d['subjects'] = $subjects;
+        $d['total_subjects'] = $subjects->count();
+        $d['active_subjects'] = $subjects->where('status', 'active')->count();
+        $d['teachers'] = $this->user->getUserByType('teacher');
+        $d['my_classes'] = $this->my_class->all();
+
+        return view('pages.support_team.subjects.dashboard', $d);
+    }
+
+    public function show($id)
+    {
+        $d['s'] = $sub = $this->my_class->findSubject($id);
+
+        if (is_null($sub)) {
+            return Qs::goWithDanger('subjects.dashboard');
+        }
+
+        $d['my_classes'] = $this->my_class->all();
+        $d['teachers'] = $this->user->getUserByType('teacher');
+
+        return view('pages.support_team.subjects.show', $d);
     }
 
     public function store(SubjectCreate $req)
@@ -54,6 +82,19 @@ class SubjectController extends Controller
         $this->my_class->updateSubject($id, $data);
 
         return Qs::jsonUpdateOk();
+    }
+
+    public function toggleStatus($id)
+    {
+        $sub = $this->my_class->findSubject($id);
+
+        if (is_null($sub)) {
+            return Qs::goWithDanger('subjects.dashboard');
+        }
+
+        $sub->update(['status' => $sub->status === 'active' ? 'inactive' : 'active']);
+
+        return back()->with('flash_success', __('msg.update_ok'));
     }
 
     public function destroy($id)

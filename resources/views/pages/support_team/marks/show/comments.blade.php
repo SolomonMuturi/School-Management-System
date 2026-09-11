@@ -1,4 +1,4 @@
-@if(Qs::userIsTeamSAT())
+﻿@if(Qs::userIsTeamSAT())
     <div class="card">
         <div class="card-header header-elements-inline bg-dark">
             <h6 class="card-title font-weight-bold">Exam Comments</h6>
@@ -28,7 +28,7 @@
                 @endif
 
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>

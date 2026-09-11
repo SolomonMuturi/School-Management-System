@@ -17,9 +17,9 @@
 
                                 <h4 class="font-weight-semibold">Acceptance of the Terms of Use</h4>
 
-                                <p>These terms of use are entered into by and between You and {{ $app_name }} ("we" or "us"). The following terms and conditions and all documents incorporated by reference (collectively, "Terms of Use"), govern your access to and use of <a target="_blank" href="{{ $app_url }}">{{ $app_url }}</a>, including any content, functionality and services offered on or through <a target="_blank" href="{{ $app_url }}">{{ $app_url }}</a> (the "Website").</p>
+                                <p>These terms of use are entered into by and between You and {{ $app_name }} ("we" or "us"). The following terms and conditions and all documents incorporated by reference (collectively, "Terms of Use"), govern your access to and use of <a href="{{ $app_url }}">{{ $app_url }}</a>, including any content, functionality and services offered on or through <a href="{{ $app_url }}">{{ $app_url }}</a> (the "Website").</p>
 
-                                <p>Please read the Terms of Use carefully before you start to use the Website. By using the Website, you accept and agree to be bound and abide by these Terms of Use and our Privacy Policy, found at <a target="_blank" href="{{ route('privacy_policy') }}">{{ route('privacy_policy') }}</a>, incorporated herein by reference. If you do not want to agree to these Terms of Use or the Privacy Policy, you must not access or use the Website.</p>
+                                <p>Please read the Terms of Use carefully before you start to use the Website. By using the Website, you accept and agree to be bound and abide by these Terms of Use and our Privacy Policy, found at <a href="{{ route('privacy_policy') }}">{{ route('privacy_policy') }}</a>, incorporated herein by reference. If you do not want to agree to these Terms of Use or the Privacy Policy, you must not access or use the Website.</p>
 
                                 <h4 class="font-weight-semibold">Changes To The Terms Of Use</h4>
 
@@ -126,7 +126,7 @@
                                     <li> Contain any material which is defamatory, obscene, indecent, abusive, offensive, harassing, violent, hateful, inflammatory or otherwise objectionable.</li>
                                     <li> Promote sexually explicit or pornographic material, violence, or discrimination based on race, sex, religion, nationality, disability, sexual orientation or age.</li>
                                     <li> Infringe any patent, trademark, trade secret, copyright or other intellectual property or other rights of any other person.</li>
-                                    <li>Violate the legal rights (including the rights of publicity and privacy) of others or contain any material that could give rise to any civil or criminal liability under applicable laws or regulations or that otherwise may be in conflict with these Terms of Use and our <a target="_blank" href="{{ route('privacy_policy') }}">Privacy Policy</a>.</li>
+                                    <li>Violate the legal rights (including the rights of publicity and privacy) of others or contain any material that could give rise to any civil or criminal liability under applicable laws or regulations or that otherwise may be in conflict with these Terms of Use and our <a href="{{ route('privacy_policy') }}">Privacy Policy</a>.</li>
                                     <li>Be likely to deceive any person.</li>
                                     <li>Promote any illegal activity, or advocate, promote or assist any unlawful act.</li>
                                     <li>Cause annoyance, inconvenience or needless anxiety or be likely to upset, embarrass, alarm or annoy any other person.</li>
@@ -149,7 +149,7 @@
 
                                 <p>Information About You and Your Visits to the Website</p>
 
-                                <p>All information we collect on this Website is subject to our Privacy Policy. By using the Website, you consent to all actions taken by us with respect to your information in compliance with the <a target="_blank" href="{{ route('privacy_policy') }}">Privacy Policy</a>.</p>
+                                <p>All information we collect on this Website is subject to our Privacy Policy. By using the Website, you consent to all actions taken by us with respect to your information in compliance with the <a href="{{ route('privacy_policy') }}">Privacy Policy</a>.</p>
 
                                 <h3>Article II</h3>
 
@@ -207,7 +207,7 @@
 
                                 <h4 class="font-weight-semibold">Entire Agreement</h4>
 
-                                <p>These Terms of Use and our <a target="_blank" href="{{ route('privacy_policy') }}">Privacy Policy</a> constitute the sole and entire agreement between you and {{ $app_name }} with respect to the Website and supersede all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to the Website.</p>
+                                <p>These Terms of Use and our <a href="{{ route('privacy_policy') }}">Privacy Policy</a> constitute the sole and entire agreement between you and {{ $app_name }} with respect to the Website and supersede all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to the Website.</p>
 
                                 <h5 class="font-weight-semibold">Your Comments and Concerns</h5>
                                 <p>If you do have any comments or concerns regarding but not limited to these Terms of Use. Please contact us.</p>

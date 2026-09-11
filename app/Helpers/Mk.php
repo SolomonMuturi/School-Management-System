@@ -66,9 +66,9 @@ class Mk extends Qs
         return self::markGradeFilter($marks, $gradeIDS);
     }
 
-    public static function countStudents($exam_id, $class_id, $section_id, $year)
+    public static function countStudents($exam_id, $class_id, $year)
     {
-        $d = ['exam_id' => $exam_id, 'my_class_id' => $class_id, 'section_id' => $section_id, 'year' => $year];
+        $d = ['exam_id' => $exam_id, 'my_class_id' => $class_id, 'year' => $year];
         return Mark::where($d)->select('student_id')->distinct()->get()->count();
     }
 

@@ -1,7 +1,8 @@
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="mt-2 mr-5">
         <a href="{{ route('dashboard') }}" class="d-inline-block">
-        <h4 class="text-bold text-white">{{ Qs::getSystemName() }}</h4>
+            <img src="{{ Qs::getSetting('logo') }}" alt="{{ Qs::getSystemName() }}" style="max-height: 40px; vertical-align: middle; margin-right: 8px;">
+            <h4 class="text-bold text-white d-inline-block align-middle mb-0">{{ Qs::getSystemName() }}</h4>
         </a>
     </div>
   {{--  <div class="navbar-brand">
@@ -33,6 +34,8 @@
 			<span class="navbar-text ml-md-3 mr-md-auto"></span>
 
         <ul class="navbar-nav">
+
+            @include('partials.notifications.bell')
 
             <li class="nav-item dropdown dropdown-user">
                 <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">

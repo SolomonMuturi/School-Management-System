@@ -21,6 +21,8 @@ class ClassUpdate extends FormRequest
     {
         return [
             'name' => 'required|string|min:3',
+            'code' => 'sometimes|nullable|string|max:30',
+            'class_type_id' => 'sometimes|nullable|exists:class_types,id',
         ];
     }
 }

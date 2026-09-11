@@ -51,7 +51,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Phone:</label>
-                                <input value="{{ $sr->user->phone  }}" type="text" name="phone" class="form-control" placeholder="" >
+                                <input value="{{ $sr->user->phone  }}" type="text" name="phone" class="form-control" placeholder="" {{ in_array('phone', $required_fields) ? 'required' : '' }}>
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Date of Birth:</label>
-                                <input name="dob" value="{{ $sr->user->dob  }}" type="text" class="form-control date-pick" placeholder="Select Date...">
+                                <input name="dob" value="{{ $sr->user->dob  }}" type="text" class="form-control date-pick" placeholder="Select Date..." {{ in_array('dob', $required_fields) ? 'required' : '' }}>
 
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="bg_id">Blood Group: </label>
-                                <select class="select form-control" id="bg_id" name="bg_id" data-fouc data-placeholder="Choose..">
+                                <select class="select form-control" id="bg_id" name="bg_id" data-fouc data-placeholder="Choose.." {{ in_array('bg_id', $required_fields) ? 'required' : '' }}>
                                     <option value=""></option>
                                     @foreach(App\Models\BloodGroup::all() as $bg)
                                         <option {{ ($sr->user->bg_id  == $bg->id ? 'selected' : '') }} value="{{ $bg->id }}">{{ $bg->name }}</option>
@@ -135,7 +135,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="my_class_id">Class: </label>
-                                <select onchange="getClassSections(this.value)" name="my_class_id" required id="my_class_id" class="form-control select-search" data-placeholder="Select Class">
+                                <select name="my_class_id" required id="my_class_id" class="form-control select-search" data-placeholder="Select Class">
                                     <option value=""></option>
                                     @foreach($my_classes as $c)
                                         <option {{ $sr->my_class_id == $c->id ? 'selected' : '' }} value="{{ $c->id }}">{{ $c->name }}</option>
@@ -146,20 +146,11 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="section_id">Section: </label>
-                                <select name="section_id" required id="section_id" class="form-control select" data-placeholder="Select Section">
-                                    <option value="{{ $sr->section_id }}">{{ $sr->section->name }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
                                 <label for="my_parent_id">Parent: </label>
                                 <select data-placeholder="Choose..."  name="my_parent_id" id="my_parent_id" class="select-search form-control">
                                     <option  value=""></option>
                                     @foreach($parents as $p)
-                                        <option {{ (Qs::hash($sr->parent_id) == Qs::hash($p->id)) ? 'selected' : '' }} value="{{ Qs::hash($p->id) }}">{{ $p->name }}</option>
+                                        <option {{ ($sr->my_parent_id && Qs::hash($sr->my_parent_id) == Qs::hash($p->id)) ? 'selected' : '' }} value="{{ Qs::hash($p->id) }}">{{ $p->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -179,21 +170,28 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <label for="dorm_id">Dormitory: </label>
-                            <select data-placeholder="Choose..."  name="dorm_id" id="dorm_id" class="select-search form-control">
-                                <option value=""></option>
-                                @foreach($dorms as $d)
-                                    <option {{ ($sr->dorm_id == $d->id) ? 'selected' : '' }} value="{{ $d->id }}">{{ $d->name }}</option>
-                                @endforeach
-                            </select>
-
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="status">Student Status: </label>
+                                <select name="status" id="status" data-placeholder="Choose..." class="select-search form-control">
+                                    @foreach($statuses as $st)
+                                        <option {{ ($sr->status == $st) ? 'selected' : '' }} value="{{ $st }}">{{ ucfirst($st) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label>Dormitory Room No:</label>
-                                <input type="text" name="dorm_room_no" placeholder="Dormitory Room No" class="form-control" value="{{ $sr->dorm_room_no }}">
+                                <label>Previous School:</label>
+                                <input type="text" name="previous_school" placeholder="Previous School (if any)" class="form-control" value="{{ $sr->previous_school }}" {{ in_array('previous_school', $required_fields) ? 'required' : '' }}>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Admission Date:</label>
+                                <input type="date" name="admission_date" class="form-control" value="{{ $sr->admission_date }}" {{ in_array('admission_date', $required_fields) ? 'required' : '' }}>
                             </div>
                         </div>
                     </div>

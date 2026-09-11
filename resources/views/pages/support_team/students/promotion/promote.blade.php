@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('students.promote', [$fc, $fs, $tc, $ts]) }}">
+<form method="post" action="{{ route('students.promote', [$fc, $tc]) }}">
     @csrf
     <table class="table table-striped">
         <thead>

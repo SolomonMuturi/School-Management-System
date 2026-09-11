@@ -21,4 +21,14 @@ class SettingRepo
     {
         return Setting::all();
     }
+
+    public function createOrUpdate($type, $desc)
+    {
+        $setting = Setting::where('type', $type)->first();
+        if ($setting) {
+            $setting->update(['description' => $desc]);
+            return $setting;
+        }
+        return Setting::create(['type' => $type, 'description' => $desc]);
+    }
 }

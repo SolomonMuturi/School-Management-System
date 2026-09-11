@@ -16,29 +16,6 @@
     <!-- Sidebar content -->
     <div class="sidebar-content">
 
-        <!-- User menu -->
-        <div class="sidebar-user">
-            <div class="card-body">
-                <div class="media">
-                    <div class="mr-3">
-                        <a href="{{ route('my_account') }}"><img src="{{ Auth::user()->photo }}" width="38" height="38" class="rounded-circle" alt="photo"></a>
-                    </div>
-
-                    <div class="media-body">
-                        <div class="media-title font-weight-semibold">{{ Auth::user()->name }}</div>
-                        <div class="font-size-xs opacity-50">
-                            <i class="icon-user font-size-sm"></i> &nbsp;{{ ucwords(str_replace('_', ' ', Auth::user()->user_type)) }}
-                        </div>
-                    </div>
-
-                    <div class="ml-3 align-self-center">
-                        <a href="{{ route('my_account') }}" class="text-white"><i class="icon-cog3"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /user menu -->
-
         <!-- Main navigation -->
         <div class="card card-sidebar-mobile">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
@@ -51,166 +28,245 @@
                     </a>
                 </li>
 
+                @if(Qs::canAccess('Analytics'))
+                {{--Analytics--}}
+                <li class="nav-item">
+                    <a href="{{ route('analytics.dashboard') }}" class="nav-link {{ Route::is('analytics.dashboard') ? 'active' : '' }}">
+                        <i class="icon-stats-bars3"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                @endif
+
                 {{--Academics--}}
                 @if(Qs::userIsAcademic())
-                    <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['tt.index', 'ttr.edit', 'ttr.show', 'ttr.manage']) ? 'nav-item-expanded nav-item-open' : '' }} ">
+                    <li class="nav-item nav-item-submenu {{ (Route::is('academic.*') || Route::is('tt.*') || Route::is('ttr.*') || Route::is('ts.*') || Route::is('classes.*') || Route::is('subjects.*') || Route::is('exams.*') || Route::is('grades.*') || Route::is('marks.*')) ? 'nav-item-expanded nav-item-open' : '' }} ">
                         <a href="#" class="nav-link"><i class="icon-graduation2"></i> <span> Academics</span></a>
 
-                        <ul class="nav nav-group-sub" data-submenu-title="Manage Academics">
+                        <ul class="nav nav-group-sub" data-submenu-title="Academics">
 
-                        {{--Timetables--}}
-                            <li class="nav-item"><a href="{{ route('tt.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['tt.index']) ? 'active' : '' }}">Timetables</a></li>
+                            {{--Academic Dashboard--}}
+                            <li class="nav-item"><a href="{{ route('academic.dashboard') }}" class="nav-link {{ Route::is('academic.dashboard') ? 'active' : '' }}">Academic Dashboard</a></li>
+
+                            {{--Classes--}}
+                            <li class="nav-item nav-item-submenu {{ (Route::is('academic.classes') || Route::is('classes.*')) ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('academic.classes') }}" class="nav-link {{ (Route::is('academic.classes') || Route::is('classes.*')) ? 'active' : '' }}">Classes</a>
+                                <ul class="nav nav-group-sub">
+                                    <li class="nav-item"><a href="{{ route('academic.classes') }}" class="nav-link {{ Route::is('academic.classes') ? 'active' : '' }}">Class List</a></li>
+                                    @if(Qs::userIsTeamSA())
+                                        <li class="nav-item"><a href="{{ route('classes.dashboard') }}" class="nav-link {{ Route::is('classes.dashboard') ? 'active' : '' }}">Class Dashboard</a></li>
+                                        <li class="nav-item"><a href="{{ route('classes.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['classes.index', 'classes.edit']) ? 'active' : '' }}">Manage Classes</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+
+                            {{--Subjects--}}
+                            <li class="nav-item nav-item-submenu {{ Route::is('subjects.*') ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('subjects.index') }}" class="nav-link {{ Route::is('subjects.*') ? 'active' : '' }}">Subjects</a>
+                                <ul class="nav nav-group-sub">
+                                    <li class="nav-item"><a href="{{ route('subjects.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['subjects.index', 'subjects.edit']) ? 'active' : '' }}">All Subjects</a></li>
+                                    @if(Qs::userIsTeamSA())
+                                        <li class="nav-item"><a href="{{ route('subjects.dashboard') }}" class="nav-link {{ Route::is('subjects.dashboard') ? 'active' : '' }}">Subject Dashboard</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+
+                            {{--Exams--}}
+                            <li class="nav-item nav-item-submenu {{ (Route::is('exams.*') || Route::is('grades.*') || Route::is('marks.*')) ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('exams.index') }}" class="nav-link {{ (Route::is('exams.*') || Route::is('grades.*') || Route::is('marks.*')) ? 'active' : '' }}">Exams</a>
+                                <ul class="nav nav-group-sub">
+                                    <li class="nav-item"><a href="{{ route('exams.index') }}" class="nav-link {{ Route::is('exams.index') ? 'active' : '' }}">All Exams</a></li>
+                                    @if(Qs::userIsTeamSA())
+                                        <li class="nav-item"><a href="{{ route('exams.dashboard') }}" class="nav-link {{ Route::is('exams.dashboard') ? 'active' : '' }}">Exam Dashboard</a></li>
+                                        <li class="nav-item"><a href="{{ route('grades.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['grades.index', 'grades.edit']) ? 'active' : '' }}">Grades</a></li>
+                                        <li class="nav-item"><a href="{{ route('marks.tabulation') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.tabulation']) ? 'active' : '' }}">Tabulation Sheet</a></li>
+                                        <li class="nav-item"><a href="{{ route('marks.batch_fix') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.batch_fix']) ? 'active' : '' }}">Batch Fix</a></li>
+                                    @endif
+                                    @if(Qs::userIsTeamSAT())
+                                        <li class="nav-item"><a href="{{ route('marks.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.index']) ? 'active' : '' }}">Marks</a></li>
+                                        <li class="nav-item"><a href="{{ route('marks.bulk') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.bulk', 'marks.show']) ? 'active' : '' }}">Marksheet</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+
+                            {{--Timetables--}}
+                            <li class="nav-item"><a href="{{ route('tt.index') }}" class="nav-link {{ (Route::is('tt.*') || Route::is('ttr.*') || Route::is('ts.*')) ? 'active' : '' }}">Timetables</a></li>
+
+                            {{--Academic Years & Terms--}}
+                            <li class="nav-item"><a href="{{ route('academic.years') }}" class="nav-link {{ Route::is('academic.years') ? 'active' : '' }}">Academic Years &amp; Terms</a></li>
+
+                            {{--Report Cards--}}
+                            <li class="nav-item"><a href="{{ route('academic.report_cards') }}" class="nav-link {{ Route::is('academic.report_cards') ? 'active' : '' }}">Report Cards</a></li>
+
+                            {{--Academic Performance--}}
+                            <li class="nav-item"><a href="{{ route('academic.performance') }}" class="nav-link {{ Route::is('academic.performance') ? 'active' : '' }}">Academic Performance</a></li>
+
+                            {{--Academic Reports--}}
+                            <li class="nav-item"><a href="{{ route('academic.reports') }}" class="nav-link {{ Route::is('academic.reports') ? 'active' : '' }}">Academic Reports</a></li>
+
+                            {{--Curriculum & Learning--}}
+                            <li class="nav-item nav-item-submenu {{ (Route::is('academic.curriculum') || Route::is('academic.lessons') || Route::is('academic.homework')) ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('academic.curriculum') }}" class="nav-link {{ (Route::is('academic.curriculum') || Route::is('academic.lessons') || Route::is('academic.homework')) ? 'active' : '' }}">Curriculum &amp; Learning</a>
+                                <ul class="nav nav-group-sub">
+                                    <li class="nav-item"><a href="{{ route('academic.curriculum') }}" class="nav-link {{ Route::is('academic.curriculum') ? 'active' : '' }}">Curriculum</a></li>
+                                    <li class="nav-item"><a href="{{ route('academic.lessons') }}" class="nav-link {{ Route::is('academic.lessons') ? 'active' : '' }}">Lessons</a></li>
+                                    <li class="nav-item"><a href="{{ route('academic.homework') }}" class="nav-link {{ Route::is('academic.homework') ? 'active' : '' }}">Assignments &amp; Homework</a></li>
+                                </ul>
+                            </li>
+
+                            {{--Academic Settings--}}
+                            @if(Qs::userIsTeamSA())
+                            <li class="nav-item"><a href="{{ route('academic.settings') }}" class="nav-link {{ Route::is('academic.settings') ? 'active' : '' }}">Academic Settings</a></li>
+                            @endif
+
                         </ul>
                     </li>
                     @endif
 
-                {{--Administrative--}}
-                @if(Qs::userIsAdministrative())
-                    <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['payments.index', 'payments.create', 'payments.invoice', 'payments.receipts', 'payments.edit', 'payments.manage', 'payments.show',]) ? 'nav-item-expanded nav-item-open' : '' }} ">
-                        <a href="#" class="nav-link"><i class="icon-office"></i> <span> Administrative</span></a>
+                {{--People--}}
+                @if(Qs::userIsTeamSAT())
+                    <li class="nav-item nav-item-submenu {{ (Route::is('students.*') || Route::is('academic.assign') || Route::is('st.reset_pass')) ? 'nav-item-expanded nav-item-open' : '' }} ">
+                        <a href="#" class="nav-link"><i class="icon-users"></i> <span> People</span></a>
 
-                        <ul class="nav nav-group-sub" data-submenu-title="Administrative">
+                        <ul class="nav nav-group-sub" data-submenu-title="People">
 
-                            {{--Payments--}}
-                            @if(Qs::userIsTeamAccount())
-                            <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['payments.index', 'payments.create', 'payments.edit', 'payments.manage', 'payments.show', 'payments.invoice']) ? 'nav-item-expanded' : '' }}">
-
-                                <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['payments.index', 'payments.edit', 'payments.create', 'payments.manage', 'payments.show', 'payments.invoice']) ? 'active' : '' }}">Payments</a>
-
+                            {{--Students--}}
+                            <li class="nav-item nav-item-submenu {{ Route::is('students.*') ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('students.index') }}" class="nav-link {{ Route::is('students.*') ? 'active' : '' }}">Students</a>
                                 <ul class="nav nav-group-sub">
-                                    <li class="nav-item"><a href="{{ route('payments.create') }}" class="nav-link {{ Route::is('payments.create') ? 'active' : '' }}">Create Payment</a></li>
-                                    <li class="nav-item"><a href="{{ route('payments.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['payments.index', 'payments.edit', 'payments.show']) ? 'active' : '' }}">Manage Payments</a></li>
-                                    <li class="nav-item"><a href="{{ route('payments.manage') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['payments.manage', 'payments.invoice', 'payments.receipts']) ? 'active' : '' }}">Student Payments</a></li>
+                                    @if(Qs::userIsTeamSA())
+                                        {{--Admit Student--}}
+                                        <li class="nav-item"><a href="{{ route('students.create') }}" class="nav-link {{ (Route::is('students.create')) ? 'active' : '' }}">Admit Student</a></li>
+                                    @endif
 
+                                    {{--All Students--}}
+                                    <li class="nav-item"><a href="{{ route('students.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.index', 'students.show']) ? 'active' : '' }}">All Students</a></li>
+
+                                    {{--Class Lists--}}
+                                    <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit']) ? 'nav-item-expanded' : '' }}">
+                                        <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit']) ? 'active' : '' }}">Class Lists</a>
+                                        <ul class="nav nav-group-sub">
+                                            @foreach(App\Models\MyClass::orderBy('name')->get() as $c)
+                                                <li class="nav-item"><a href="{{ route('students.list', $c->id) }}" class="nav-link ">{{ $c->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+
+                                    @if(Qs::userIsTeamSA())
+                                        {{--Student Promotion--}}
+                                        <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.promotion', 'students.promotion_manage']) ? 'nav-item-expanded' : '' }}"><a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['students.promotion', 'students.promotion_manage' ]) ? 'active' : '' }}">Student Promotion</a>
+                                        <ul class="nav nav-group-sub">
+                                            <li class="nav-item"><a href="{{ route('students.promotion') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.promotion']) ? 'active' : '' }}">Promote Students</a></li>
+                                            <li class="nav-item"><a href="{{ route('students.promotion_manage') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.promotion_manage']) ? 'active' : '' }}">Manage Promotions</a></li>
+                                        </ul>
+                                        </li>
+
+                                        {{--Students Graduated--}}
+                                        <li class="nav-item"><a href="{{ route('students.graduated') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.graduated' ]) ? 'active' : '' }}">Students Graduated</a></li>
+                                    @endif
+
+                                    {{--Student Status--}}
+                                    <li class="nav-item {{ in_array(Route::currentRouteName(), ['students.status']) ? 'nav-item-open' : '' }}"><a href="{{ route('students.status') }}" class="nav-link {{ Route::is('students.status') ? 'active' : '' }}">Student Status</a></li>
+
+                                    {{--Student Reports--}}
+                                    <li class="nav-item {{ in_array(Route::currentRouteName(), ['students.reports']) ? 'nav-item-open' : '' }}"><a href="{{ route('students.reports') }}" class="nav-link {{ Route::is('students.reports') ? 'active' : '' }}">Student Reports</a></li>
+
+                                    @if(Qs::userIsTeamSA())
+                                        {{--Student Settings--}}
+                                        <li class="nav-item"><a href="{{ route('students.settings') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.settings' ]) ? 'active' : '' }}">Student Settings</a></li>
+                                    @endif
                                 </ul>
-
                             </li>
-                            @endif
+
+                            {{--Teachers--}}
+                            <li class="nav-item"><a href="{{ route('academic.assign') }}" class="nav-link {{ Route::is('academic.assign') ? 'active' : '' }}">Teacher &amp; Subject Assignment</a></li>
+
+                            {{--Parents--}}
+                            <li class="nav-item"><a href="{{ route('students.guardians') }}" class="nav-link {{ Route::is('students.guardians') ? 'active' : '' }}">Parents &amp; Guardians</a></li>
+
                         </ul>
                     </li>
                 @endif
 
-                {{--Manage Students--}}
-                @if(Qs::userIsTeamSAT())
-                    <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.create', 'students.list', 'students.edit', 'students.show', 'students.promotion', 'students.promotion_manage', 'students.graduated']) ? 'nav-item-expanded nav-item-open' : '' }} ">
-                        <a href="#" class="nav-link"><i class="icon-users"></i> <span> Students</span></a>
+                {{--Operations--}}
+                @if(Qs::userIsTeamAccount() && !Qs::userIsTeamSA())
+                    <li class="nav-item nav-item-submenu {{ str_starts_with((string)Route::currentRouteName(), 'finance.') ? 'nav-item-expanded nav-item-open' : '' }} ">
+                        <a href="#" class="nav-link"><i class="icon-cash3"></i> <span> Operations</span></a>
 
-                        <ul class="nav nav-group-sub" data-submenu-title="Manage Students">
-                            {{--Admit Student--}}
-                            @if(Qs::userIsTeamSA())
-                                <li class="nav-item">
-                                    <a href="{{ route('students.create') }}"
-                                       class="nav-link {{ (Route::is('students.create')) ? 'active' : '' }}">Admit Student</a>
-                                </li>
-                            @endif
+                        <ul class="nav nav-group-sub" data-submenu-title="Operations">
 
-                            {{--Student Information--}}
-                            <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit', 'students.show']) ? 'nav-item-expanded' : '' }}">
-                                <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit', 'students.show']) ? 'active' : '' }}">Student Information</a>
+                            {{--Finance--}}
+                            <li class="nav-item nav-item-submenu {{ str_starts_with((string)Route::currentRouteName(), 'finance.') ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('finance.dashboard') }}" class="nav-link {{ str_starts_with((string)Route::currentRouteName(), 'finance.') ? 'active' : '' }}">Finance</a>
                                 <ul class="nav nav-group-sub">
-                                    @foreach(App\Models\MyClass::orderBy('name')->get() as $c)
-                                        <li class="nav-item"><a href="{{ route('students.list', $c->id) }}" class="nav-link ">{{ $c->name }}</a></li>
-                                    @endforeach
+                                    <li class="nav-item"><a href="{{ route('finance.dashboard') }}" class="nav-link {{ Route::is('finance.dashboard') ? 'active' : '' }}">Dashboard</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.fee_types') }}" class="nav-link {{ Route::is('finance.fee_types') ? 'active' : '' }}">Fee Types</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.fee_structures') }}" class="nav-link {{ Route::is('finance.fee_structures') ? 'active' : '' }}">Fee Structures</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.billing') }}" class="nav-link {{ Route::is('finance.billing') ? 'active' : '' }}">Student Billing</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.payments') }}" class="nav-link {{ Route::is('finance.payments') ? 'active' : '' }}">Payments</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.receipts') }}" class="nav-link {{ Route::is('finance.receipts') ? 'active' : '' }}">Receipts</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.discounts') }}" class="nav-link {{ Route::is('finance.discounts') ? 'active' : '' }}">Discounts</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.refunds') }}" class="nav-link {{ Route::is('finance.refunds') ? 'active' : '' }}">Refunds</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.expenses') }}" class="nav-link {{ Route::is('finance.expenses') ? 'active' : '' }}">Expenses</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.suppliers') }}" class="nav-link {{ Route::is('finance.suppliers') ? 'active' : '' }}">Suppliers</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.accounts') }}" class="nav-link {{ Route::is('finance.accounts') ? 'active' : '' }}">Cash &amp; Bank</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.reports') }}" class="nav-link {{ Route::is('finance.reports') ? 'active' : '' }}">Reports</a></li>
+                                    <li class="nav-item"><a href="{{ route('finance.settings') }}" class="nav-link {{ Route::is('finance.settings') ? 'active' : '' }}">Settings</a></li>
                                 </ul>
                             </li>
 
-                            @if(Qs::userIsTeamSA())
+                        </ul>
+                    </li>
+                @endif
 
-                            {{--Student Promotion--}}
-                            <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.promotion', 'students.promotion_manage']) ? 'nav-item-expanded' : '' }}"><a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['students.promotion', 'students.promotion_manage' ]) ? 'active' : '' }}">Student Promotion</a>
-                            <ul class="nav nav-group-sub">
-                                <li class="nav-item"><a href="{{ route('students.promotion') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.promotion']) ? 'active' : '' }}">Promote Students</a></li>
-                                <li class="nav-item"><a href="{{ route('students.promotion_manage') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.promotion_manage']) ? 'active' : '' }}">Manage Promotions</a></li>
-                            </ul>
+                {{--Services--}}
+                @if(Qs::userIsTeamSAT())
+                    <li class="nav-item nav-item-submenu {{ Route::is('students.attendance') ? 'nav-item-expanded nav-item-open' : '' }} ">
+                        <a href="#" class="nav-link"><i class="icon-alarm"></i> <span> Services</span></a>
 
-                            </li>
+                        <ul class="nav nav-group-sub" data-submenu-title="Services">
 
-                            {{--Student Graduated--}}
-                            <li class="nav-item"><a href="{{ route('students.graduated') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['students.graduated' ]) ? 'active' : '' }}">Students Graduated</a></li>
-                                @endif
+                            {{--Attendance--}}
+                            <li class="nav-item"><a href="{{ route('students.attendance') }}" class="nav-link {{ Route::is('students.attendance') ? 'active' : '' }}">Daily Attendance</a></li>
 
                         </ul>
                     </li>
                 @endif
 
                 @if(Qs::userIsTeamSA())
-                    {{--Manage Users--}}
-                    <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['users.index', 'users.show', 'users.edit']) ? 'active' : '' }}"><i class="icon-users4"></i> <span> Users</span></a>
-                    </li>
+                    {{--Administration--}}
+                    <li class="nav-item nav-item-submenu {{ (Route::is('users.*') || Route::is('settings') || Route::is('academic.settings') || Route::is('pins.*') || str_starts_with((string)Route::currentRouteName(), 'finance.')) ? 'nav-item-expanded nav-item-open' : '' }}">
+                        <a href="#" class="nav-link"><i class="icon-shield2"></i> <span> Administration</span></a>
 
-                    {{--Manage Classes--}}
-                    <li class="nav-item">
-                        <a href="{{ route('classes.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['classes.index','classes.edit']) ? 'active' : '' }}"><i class="icon-windows2"></i> <span> Classes</span></a>
-                    </li>
+                        <ul class="nav nav-group-sub" data-submenu-title="Administration">
 
-                    {{--Manage Dorms--}}
-                    <li class="nav-item">
-                        <a href="{{ route('dorms.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['dorms.index','dorms.edit']) ? 'active' : '' }}"><i class="icon-home9"></i> <span> Dormitories</span></a>
-                    </li>
-
-                    {{--Manage Sections--}}
-                    <li class="nav-item">
-                        <a href="{{ route('sections.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['sections.index','sections.edit',]) ? 'active' : '' }}"><i class="icon-fence"></i> <span>Sections</span></a>
-                    </li>
-
-                    {{--Manage Subjects--}}
-                    <li class="nav-item">
-                        <a href="{{ route('subjects.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['subjects.index','subjects.edit',]) ? 'active' : '' }}"><i class="icon-pin"></i> <span>Subjects</span></a>
-                    </li>
-                @endif
-
-                {{--Exam--}}
-                @if(Qs::userIsTeamSAT())
-                <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['exams.index', 'exams.edit', 'grades.index', 'grades.edit', 'marks.index', 'marks.manage', 'marks.bulk', 'marks.tabulation', 'marks.show', 'marks.batch_fix',]) ? 'nav-item-expanded nav-item-open' : '' }} ">
-                    <a href="#" class="nav-link"><i class="icon-books"></i> <span> Exams</span></a>
-
-                    <ul class="nav nav-group-sub" data-submenu-title="Manage Exams">
-                        @if(Qs::userIsTeamSA())
-
-                        {{--Exam list--}}
-                            <li class="nav-item">
-                                <a href="{{ route('exams.index') }}"
-                                   class="nav-link {{ (Route::is('exams.index')) ? 'active' : '' }}">Exam List</a>
+                            {{--Users--}}
+                            <li class="nav-item nav-item-submenu {{ Route::is('users.*') ? 'nav-item-expanded' : '' }}">
+                                <a href="{{ route('users.index') }}" class="nav-link {{ Route::is('users.*') ? 'active' : '' }}">Users</a>
+                                <ul class="nav nav-group-sub">
+                                    <li class="nav-item"><a href="{{ route('users.dashboard') }}" class="nav-link {{ Route::is('users.dashboard') ? 'active' : '' }}">Users Dashboard</a></li>
+                                    <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link {{ Route::is('users.index') ? 'active' : '' }}">All Users</a></li>
+                                    <li class="nav-item"><a href="{{ route('users.roles') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['users.roles', 'users.roles.edit']) ? 'active' : '' }}">Roles</a></li>
+                                    <li class="nav-item"><a href="{{ route('users.permissions') }}" class="nav-link {{ Route::is('users.permissions') ? 'active' : '' }}">Permissions</a></li>
+                                    <li class="nav-item"><a href="{{ route('users.activity') }}" class="nav-link {{ Route::is('users.activity') ? 'active' : '' }}">Activity Logs</a></li>
+                                </ul>
                             </li>
 
-                            {{--Grades list--}}
-                            <li class="nav-item">
-                                    <a href="{{ route('grades.index') }}"
-                                       class="nav-link {{ in_array(Route::currentRouteName(), ['grades.index', 'grades.edit']) ? 'active' : '' }}">Grades</a>
-                            </li>
-
-                            {{--Tabulation Sheet--}}
-                            <li class="nav-item">
-                                <a href="{{ route('marks.tabulation') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.tabulation']) ? 'active' : '' }}">Tabulation Sheet</a>
-                            </li>
-
-                            {{--Marks Batch Fix--}}
-                            <li class="nav-item">
-                                <a href="{{ route('marks.batch_fix') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.batch_fix']) ? 'active' : '' }}">Batch Fix</a>
-                            </li>
-                        @endif
-
-                        @if(Qs::userIsTeamSAT())
-                            {{--Marks Manage--}}
-                            <li class="nav-item">
-                                <a href="{{ route('marks.index') }}"
-                                   class="nav-link {{ in_array(Route::currentRouteName(), ['marks.index']) ? 'active' : '' }}">Marks</a>
-                            </li>
-
-                            {{--Marksheet--}}
-                            <li class="nav-item">
-                                <a href="{{ route('marks.bulk') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['marks.bulk', 'marks.show']) ? 'active' : '' }}">Marksheet</a>
-                            </li>
-
+                            @if(Qs::userIsTeamAccount())
+                                <li class="nav-item"><a href="{{ route('finance.dashboard') }}" class="nav-link {{ str_starts_with((string)Route::currentRouteName(), 'finance.') ? 'active' : '' }}">Finance</a></li>
                             @endif
 
-                    </ul>
-                </li>
+                            @if(Qs::canAccess('System Settings'))
+                                <li class="nav-item"><a href="{{ route('settings') }}" class="nav-link {{ Route::is('settings') ? 'active' : '' }}">System Settings</a></li>
+                            @endif
+
+                            @if(Qs::canAccess('Pins'))
+                            <li class="nav-item"><a href="{{ route('pins.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['pins.index', 'pins.create']) ? 'active' : '' }}">PINs</a></li>
+                            @endif
+
+                        </ul>
+                    </li>
                 @endif
-
-
-                {{--End Exam--}}
 
                 @include('pages.'.Qs::getUserType().'.menu')
 

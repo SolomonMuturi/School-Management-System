@@ -62,6 +62,21 @@
 
                     </div>
 
+                    @if($user->user_type == 'parent')
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Link Students:</label>
+                                    <select name="students[]" id="parentStudents" class="select-search form-control" multiple data-placeholder="Select students to link to this parent...">
+                                        @foreach($students as $sr)
+                                            <option {{ $user->my_students->contains('id', $sr->id) ? 'selected' : '' }} value="{{ $sr->id }}">{{ $sr->user ? $sr->user->name . ' ('.$sr->adm_no.')' : 'Student #'.$sr->id }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="row">
                         @if(in_array($user->user_type, Qs::getStaff()))
                             <div class="col-md-4">

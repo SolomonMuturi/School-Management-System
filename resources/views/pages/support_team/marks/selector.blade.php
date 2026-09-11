@@ -1,11 +1,11 @@
-<form method="post" action="{{ route('marks.selector') }}">
+﻿<form method="post" action="{{ route('marks.selector') }}">
         @csrf
         <div class="row">
             <div class="col-md-10">
                 <fieldset>
 
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="exam_id" class="col-form-label font-weight-bold">Exam:</label>
                                 <select required id="exam_id" name="exam_id" data-placeholder="Select Exam" class="form-control select">
@@ -16,7 +16,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="my_class_id" class="col-form-label font-weight-bold">Class:</label>
                                 <select required onchange="getClassSubjects(this.value)" id="my_class_id" name="my_class_id" class="form-control select">
@@ -28,20 +28,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="section_id" class="col-form-label font-weight-bold">Section:</label>
-                                <select required id="section_id" name="section_id" data-placeholder="Select Class First" class="form-control select">
-                                   @if($selected)
-                                        @foreach($sections->where('my_class_id', $my_class_id) as $s)
-                                            <option {{ $section_id == $s->id ? 'selected' : '' }} value="{{ $s->id }}">{{ $s->name }}</option>
-                                        @endforeach
-                                       @endif
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="subject_id" class="col-form-label font-weight-bold">Subject:</label>
                                 <select required id="subject_id" name="subject_id" data-placeholder="Select Class First" class="form-control select-search">
@@ -60,7 +47,7 @@
 
             <div class="col-md-2 mt-4">
                 <div class="text-right mt-1">
-                    <button type="submit" class="btn btn-primary">Manage Marks <i class="icon-paperplane ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary">Manage Marks</button>
                 </div>
             </div>
 

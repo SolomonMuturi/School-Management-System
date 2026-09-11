@@ -1,4 +1,1 @@
-{{--Books--}}
-<li class="nav-item">
-    <a href="#" class="nav-link "><i class="icon-books"></i> Books</a>
-</li>
+{{-- Library module is not yet wired up. Render nothing until routes/views exist. --}}

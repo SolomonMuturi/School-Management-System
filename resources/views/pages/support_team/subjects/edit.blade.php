@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Edit Subject - '.$s->name. ' ('.$s->my_class->name.')')
 @section('content')
 
@@ -28,6 +28,13 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label font-weight-semibold">Subject Code</label>
+                            <div class="col-lg-9">
+                                <input name="code" value="{{ $s->code }}" type="text" class="form-control" placeholder="Eg. MTH">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="my_class_id" class="col-lg-3 col-form-label font-weight-semibold">Class <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select required data-placeholder="Select Class" class="form-control select" name="my_class_id" id="my_class_id">
@@ -50,8 +57,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="status" class="col-lg-3 col-form-label font-weight-semibold">Status</label>
+                            <div class="col-lg-9">
+                                <select name="status" id="status" class="form-control select">
+                                    <option {{ $s->status == 'active' ? 'selected' : '' }} value="active">Active</option>
+                                    <option {{ $s->status == 'inactive' ? 'selected' : '' }} value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="description" class="col-lg-3 col-form-label font-weight-semibold">Description</label>
+                            <div class="col-lg-9">
+                                <textarea name="description" id="description" rows="3" class="form-control" placeholder="Brief description of the subject">{{ $s->description }}</textarea>
+                            </div>
+                        </div>
+
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

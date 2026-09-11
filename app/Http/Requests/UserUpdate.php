@@ -20,6 +20,7 @@ class UserUpdate extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|string|min:3|max:190',
             'phone' => 'sometimes|nullable|string|min:6|max:20',
             'phone2' => 'sometimes|nullable|string|min:6|max:20',
             'email' => 'sometimes|nullable|email|max:100|unique:users,id',

@@ -11,7 +11,7 @@ class StudentRecord extends Eloquent
     use HasFactory;
 
     protected $fillable = [
-        'session', 'user_id', 'my_class_id', 'section_id', 'my_parent_id', 'dorm_id', 'dorm_room_no', 'adm_no', 'year_admitted', 'wd', 'wd_date', 'grad', 'grad_date', 'house', 'age'
+        'session', 'user_id', 'my_class_id', 'my_parent_id', 'adm_no', 'year_admitted', 'grad', 'grad_date', 'house', 'age', 'status', 'admission_date', 'previous_school'
     ];
 
     public function user()
@@ -29,13 +29,48 @@ class StudentRecord extends Eloquent
         return $this->belongsTo(MyClass::class);
     }
 
-    public function section()
+    public function guardians()
     {
-        return $this->belongsTo(Section::class);
+        return $this->hasMany(StudentGuardian::class, 'student_id', 'user_id');
     }
 
-    public function dorm()
+    public function attendance()
     {
-        return $this->belongsTo(Dorm::class);
+        return $this->hasMany(StudentAttendance::class, 'student_id', 'user_id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(StudentDocument::class, 'student_id', 'user_id');
+    }
+
+    public function discipline()
+    {
+        return $this->hasMany(StudentDiscipline::class, 'student_id', 'user_id');
+    }
+
+    public function health()
+    {
+        return $this->hasOne(StudentHealth::class, 'student_id', 'user_id');
+    }
+
+    public function transport()
+    {
+        return $this->hasOne(StudentTransport::class, 'student_id', 'user_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(StudentActivity::class, 'student_id', 'user_id');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(StudentEvent::class, 'student_id', 'user_id');
+    }
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class, 'student_id', 'user_id');
     }
 }

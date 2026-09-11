@@ -99,4 +99,17 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Inactivity Logout
+    |--------------------------------------------------------------------------
+    |
+    | Number of minutes of inactivity after which an authenticated user is
+    | automatically logged out (both enforced server-side and via JS idle
+    | timer).
+    |
+    */
+
+    'inactivity_timeout' => 7,
+
 ];

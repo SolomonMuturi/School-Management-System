@@ -7,17 +7,17 @@
         <div class="content-wrapper">
 
             <!-- Content area -->
-            <div class="content d-flex justify-content-center align-items-center">
+            <div class="content d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 100px);">
 
                 <!-- Login card -->
-                <form class="login-form " method="post" action="{{ route('login') }}">
+                <form class="login-form" method="post" action="{{ route('login') }}">
                     @csrf
                     <div class="card mb-0">
                         <div class="card-body">
-                            <div class="text-center mb-3">
-                                <i class="icon-people icon-2x text-warning-400 border-warning-400 border-3 rounded-round p-3 mb-3 mt-1"></i>
-                                <h5 class="mb-0">Login to your account</h5>
-                                <span class="d-block text-muted">Your credentials</span>
+                            <div class="text-center mb-4">
+                                <img src="{{ Qs::getSetting('logo') }}" alt="{{ Qs::getSystemName() }}" class="mb-3" style="max-height: 80px; max-width: 100%;">
+                                <h5 class="mb-1">Welcome Back</h5>
+                                <span class="d-block text-muted" style="font-size: 0.9rem;">Sign in to your account</span>
                             </div>
 
                                 @if ($errors->any())
@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 ml-2"></i></button>
+                                <button type="submit" class="btn btn-primary btn-block">Sign In <i class="icon-circle-right2 ml-2"></i></button>
                             </div>
 
                            {{-- <div class="form-group">

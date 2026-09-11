@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Edit Class - '.$c->name)
 @section('content')
 
@@ -17,6 +17,13 @@
                             <label class="col-lg-3 col-form-label font-weight-semibold">Name <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input name="name" value="{{ $c->name }}" required type="text" class="form-control" placeholder="Name of Class">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label font-weight-semibold">Class Code</label>
+                            <div class="col-lg-9">
+                                <input name="code" value="{{ $c->code }}" type="text" class="form-control" placeholder="Eg. JSS1">
                             </div>
                         </div>
 
@@ -42,7 +49,7 @@
                         </div>
 
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Manage Subjects')
 @section('content')
 
@@ -9,6 +9,11 @@
         </div>
 
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <a href="{{ route('subjects.dashboard') }}" class="btn btn-outline-primary btn-sm">Open Dashboard</a>
+                </div>
+            </div>
             <ul class="nav nav-tabs nav-tabs-highlight">
                 <li class="nav-item"><a href="#new-subject" class="nav-link active" data-toggle="tab">Add Subject</a></li>
                 <li class="nav-item dropdown">
@@ -42,6 +47,13 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label for="code" class="col-lg-3 col-form-label font-weight-semibold">Subject Code</label>
+                                    <div class="col-lg-9">
+                                        <input id="code" name="code" value="{{ old('code') }}" type="text" class="form-control" placeholder="Eg. MTH">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label for="my_class_id" class="col-lg-3 col-form-label font-weight-semibold">Select Class <span class="text-danger">*</span></label>
                                     <div class="col-lg-9">
                                         <select required data-placeholder="Select Class" class="form-control select" name="my_class_id" id="my_class_id">
@@ -66,7 +78,7 @@
                                 </div>
 
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -82,6 +94,7 @@
                                 <th>Short Name</th>
                                 <th>Class</th>
                                 <th>Teacher</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -92,7 +105,8 @@
                                     <td>{{ $s->name }} </td>
                                     <td>{{ $s->slug }} </td>
                                     <td>{{ $s->my_class->name }}</td>
-                                    <td>{{ $s->teacher->name }}</td>
+                                    <td>{{ $s->teacher ? $s->teacher->name : '-' }}</td>
+                                    <td><span class="badge {{ $s->status == 'active' ? 'badge-success' : 'badge-secondary' }}">{{ $s->status ?: 'active' }}</span></td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="dropdown">
@@ -101,6 +115,7 @@
                                                 </a>
 
                                                 <div class="dropdown-menu dropdown-menu-left">
+                                                    <a href="{{ route('subjects.show', $s->id) }}" class="dropdown-item"><i class="icon-eye"></i> View</a>
                                                     {{--edit--}}
                                                     @if(Qs::userIsTeamSA())
                                                         <a href="{{ route('subjects.edit', $s->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit</a>

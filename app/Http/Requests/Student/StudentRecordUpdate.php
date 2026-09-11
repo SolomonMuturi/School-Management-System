@@ -29,12 +29,13 @@ class StudentRecordUpdate extends FormRequest
             'address' => 'required|string|min:6|max:120',
             'bg_id' => 'sometimes|nullable',
             'my_class_id' => 'required',
-            'section_id' => 'required',
             'state_id' => 'required',
             'lga_id' => 'required',
             'nal_id' => 'required',
             'my_parent_id' => 'sometimes|nullable',
-            'dorm_id' => 'sometimes|nullable',
+            'status' => 'sometimes|nullable|in:active,inactive,graduated,transferred,suspended,withdrawn',
+            'admission_date' => 'sometimes|nullable|date',
+            'previous_school' => 'sometimes|nullable|string|max:150',
         ];
     }
 
@@ -42,13 +43,11 @@ class StudentRecordUpdate extends FormRequest
     {
         return  [
             'nal_id' => 'Nationality',
-            'dorm_id' => 'Dormitory',
             'state_id' => 'State',
             'lga_id' => 'LGA',
             'bg_id' => 'Blood Group',
             'my_parent_id' => 'Parent',
             'my_class_id' => 'Class',
-            'section_id' => 'Section',
         ];
     }
 

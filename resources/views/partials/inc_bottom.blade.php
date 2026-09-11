@@ -15,10 +15,32 @@
 
 {{--DataTables--}}
 <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('global_assets/js/plugins/tables/datatables/extensions/jszip/jszip.min.js') }}"></script>
-<script src="{{ asset('global_assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{ asset('global_assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js') }}"></script>
 <script src="{{ asset('global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+<script>
+    (function () {
+        if (!document.querySelector('.datatable-button-html5-columns')) return;
+        var files = [
+            '{{ asset('global_assets/js/plugins/tables/datatables/extensions/jszip/jszip.min.js') }}',
+            '{{ asset('global_assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js') }}',
+            '{{ asset('global_assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js') }}'
+        ];
+        var i = 0;
+        (function next() {
+            if (i >= files.length) {
+                if (window.jQuery) {
+                    jQuery.getScript('{{ asset('global_assets/js/demo_pages/datatables_extension_buttons_html5.js') }}');
+                }
+                return;
+            }
+            var s = document.createElement('script');
+            s.src = files[i];
+            s.onload = next;
+            s.onerror = next;
+            document.body.appendChild(s);
+            i++;
+        })();
+    })();
+</script>
 
 {{--Date Pickers--}}
 <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
@@ -35,7 +57,6 @@
 <script src=" {{ asset('assets/js/app.js') }} "></script>
 <script src="{{ asset('global_assets/js/demo_pages/form_wizard.js') }}"></script>
 <script src="{{ asset('global_assets/js/demo_pages/form_select2.js') }}"></script>
-<script src="{{ asset('global_assets/js/demo_pages/datatables_extension_buttons_html5.js') }}"></script>
 <script src="{{ asset('global_assets/js/demo_pages/uploader_bootstrap.js') }}"></script>
 <script src="{{ asset('global_assets/js/demo_pages/fullcalendar_basic.js') }}"></script>
 

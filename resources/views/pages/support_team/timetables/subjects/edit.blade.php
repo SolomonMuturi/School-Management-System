@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="edit-subs">
+﻿<div class="tab-pane fade" id="edit-subs">
     {{--If TimeTables Exist--}}
     @if($tts->count())
         @foreach($tts->chunk(2) as $chunk)
@@ -96,7 +96,7 @@
 
                                         {{--SUBMIT--}}
                                         <div class="text-right">
-                                            <button type="submit" class="btn btn-primary">Submit Form <i class="icon-paperplane ml-2"></i>
+                                            <button type="submit" class="btn btn-primary">Save
                                             </button>
                                         </div>
                                     </form>

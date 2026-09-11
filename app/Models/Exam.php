@@ -6,5 +6,5 @@ use Eloquent;
 
 class Exam extends Eloquent
 {
-    protected $fillable = ['name', 'term', 'year'];
+    protected $fillable = ['name', 'type', 'start_date', 'end_date', 'status', 'term', 'year'];
 }

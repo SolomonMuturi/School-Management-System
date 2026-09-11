@@ -53,7 +53,7 @@ class UserRepo {
 
     public function getPTAUsers()
     {
-        return User::where('user_type', '<>', 'student')->orderBy('name', 'asc')->get();
+        return User::orderBy('name', 'asc')->get();
     }
 
     /********** STAFF RECORD ********/

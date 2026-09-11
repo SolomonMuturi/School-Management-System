@@ -23,7 +23,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'phone', 'phone2', 'dob', 'gender', 'photo', 'address', 'bg_id', 'password', 'nal_id', 'state_id', 'lga_id', 'code', 'user_type', 'email_verified_at'
+        'name', 'username', 'email', 'phone', 'phone2', 'dob', 'gender', 'photo', 'address', 'bg_id', 'password', 'nal_id', 'state_id', 'lga_id', 'code', 'user_type', 'email_verified_at', 'status', 'last_login'
+    ];
+
+    protected $casts = [
+        'last_login' => 'datetime',
     ];
 
     /**
@@ -38,6 +42,16 @@ class User extends Authenticatable
     public function student_record()
     {
         return $this->hasOne(StudentRecord::class);
+    }
+
+    public function admission()
+    {
+        return $this->hasOne(StudentRecord::class);
+    }
+
+    public function my_students()
+    {
+        return $this->hasMany(\App\Models\StudentRecord::class, 'my_parent_id');
     }
 
     public function lga()
@@ -63,5 +77,10 @@ class User extends Authenticatable
     public function staff()
     {
         return $this->hasMany(StaffRecord::class);
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(\App\Models\Subject::class, 'teacher_id');
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Manage Classes')
 @section('content')
 
@@ -16,12 +16,19 @@
 
             <div class="tab-content">
                     <div class="tab-pane fade show active" id="all-classes">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <a href="{{ route('classes.dashboard') }}" class="btn btn-outline-primary btn-sm">Open Dashboard</a>
+                            </div>
+                        </div>
                         <table class="table datatable-button-html5-columns">
                             <thead>
                             <tr>
                                 <th>S/N</th>
                                 <th>Name</th>
+                                <th>Class Code</th>
                                 <th>Class Type</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -30,7 +37,9 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $c->name }}</td>
+                                    <td>{{ $c->code ?: '-' }}</td>
                                     <td>{{ $c->class_type->name }}</td>
+                                    <td><span class="badge {{ $c->status == 'active' ? 'badge-success' : 'badge-secondary' }}">{{ $c->status ?: 'active' }}</span></td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="dropdown">
@@ -61,16 +70,6 @@
 
                 <div class="tab-pane fade" id="new-class">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-info border-0 alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-
-                                <span>When a class is created, a Section will be automatically created for the class, you can edit it or add more sections to the class at <a target="_blank" href="{{ route('sections.index') }}">Manage Sections</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <form class="ajax-store" method="post" action="{{ route('classes.store') }}">
                                 @csrf
@@ -78,6 +77,13 @@
                                     <label class="col-lg-3 col-form-label font-weight-semibold">Name <span class="text-danger">*</span></label>
                                     <div class="col-lg-9">
                                         <input name="name" value="{{ old('name') }}" required type="text" class="form-control" placeholder="Name of Class">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label font-weight-semibold">Class Code</label>
+                                    <div class="col-lg-9">
+                                        <input name="code" value="{{ old('code') }}" type="text" class="form-control" placeholder="Eg. JSS1">
                                     </div>
                                 </div>
 
@@ -93,7 +99,7 @@
                                 </div>
 
                                 <div class="text-right">
-                                    <button id="ajax-btn" type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                                    <button id="ajax-btn" type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </form>
                         </div>

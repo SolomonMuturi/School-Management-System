@@ -1,123 +1,280 @@
-## **Laravel School Management System** 
+# Laravel School Management System (LSMS)
 
-**LAVSMS** is developed for educational institutions like schools and colleges built on Laravel 8
+A full-featured school management system built with Laravel 8, designed for educational institutions such as schools and colleges. It supports role-based access control with seven distinct user types, comprehensive academic management, finance tracking, library management, and PDF report generation.
 
-**SCREENSHOTS** 
+---
 
-**Dashboard**
-<img src="https://i.ibb.co/D4T0z6T/dashboard.png" alt="dashboard" border="0">
+## Screenshots
 
-**Login**
-<img src="https://i.ibb.co/Rh1Bfwk/login.png" alt="login" border="0">
+| Dashboard | Login | Marksheet |
+|-----------|-------|-----------|
+| ![Dashboard](https://i.ibb.co/D4T0z6T/dashboard.png) | ![Login](https://i.ibb.co/Rh1Bfwk/login.png) | ![Marksheet](https://i.ibb.co/GCgv5ZR/marksheet.png) |
 
-**Student Marksheet**
-<img src="https://i.ibb.co/GCgv5ZR/marksheet.png" alt="marksheet" border="0">
+| System Settings | Print Marksheet | Tabulation Sheet |
+|-----------------|-----------------|------------------|
+| ![Settings](https://i.ibb.co/Kmrhw69/system-settings.png) | ![Print](https://i.ibb.co/5c1GHCj/capture-20210530-115521-crop.png) | ![Tabulation](https://i.ibb.co/QmscPfn/capture-20210530-115802.png) |
 
-**System Settings**
-<img src="https://i.ibb.co/Kmrhw69/system-settings.png" alt="system-settings" border="0">
+---
 
-**Print Marksheet**
-<div style="clear: both"> </div>
-<img src="https://i.ibb.co/5c1GHCj/capture-20210530-115521-crop.png" alt="print-marksheet">
+## Features
 
-**Print Tabulation Sheet & Marksheet**
-<img src="https://i.ibb.co/QmscPfn/capture-20210530-115802.png" alt="tabulation-sheet" border="0">
+### User Roles
 
-<hr />  
+| Role | Capabilities |
+|------|-------------|
+| **Super Admin** | Full system access, delete any record, create any user account |
+| **Admin** | Manage students, classes, exams, subjects, users, payments, noticeboard, system settings |
+| **Teacher** | Manage own class/section, exam records, timetable, study materials, profile |
+| **Student** | View marks, timetable, payments, library, noticeboard, calendar, profile |
+| **Parent** | View child's marksheet (download/print PDF), timetable, payments, noticeboard, calendar |
+| **Accountant** | Manage payments & fees, print payment receipts |
+| **Librarian** | Manage library books |
 
-There are 7 types of user accounts. They include:
- 
-Administrators (Super Admin & Admin)
-- Librarian
-- Accountant
-- Teacher
-- Student
-- Parent
+### Academic Management
 
-**Requirements** 
+- Academic years & terms with current term tracking
+- Class & section management with teacher assignment
+- Subject management with curriculum & topic support
+- Teacher-to-subject & teacher-to-class assignment
+- Lesson planning & homework/assignment management with submissions & grading
+- Student promotion between classes
+- Student attendance tracking
+- Marks entry, tabulation sheets, and batch updates
+- Report cards with PDF generation
+- Academic performance analytics by class, subject, and student
 
-Check Laravel 8 Requirements https://laravel.com/docs/8.x
+### Finance Module
 
-**Installation**
-- Install dependencies (composer install)
-- Set Database Credentials & App Settings in dotenv file (.env)
-- Migrate Database (php artisan migrate)
-- Database seed (php artisan db:seed)
+- Fee types & fee structures per class
+- Student billing & invoice generation
+- Payment recording with receipt generation (PDF)
+- Student fee statements (PDF)
+- Discounts & refunds management
+- Expense tracking with categories & suppliers
+- Cash & bank account management
+- Financial reports & dashboard
+- **M-Pesa (Daraja) mobile payments** — STK push from the Payments page, status tracking, and automatic payment finalization via Safaricom callback
 
-**Login Credentials**
-After seeding. Login details as follows:
+### Advanced Analytics
 
-| Account Type  | Username | Email | Password |
-| ------------- | -------- | ----- | -------- |
-| Super Admin | cj | cj@cj.com | cj |
-|  Admin | admin | admin@admin.com | cj |
-|  Teacher | teacher | teacher@teacher.com | cj |
-|  Parent | parent | parent@parent.com | cj |
-|  Accountant | accountant | accountant@accountant.com | cj |
-|  Student | student | student@student.com | cj |
+- Dedicated Analytics dashboard (ECharts) accessible to admins, teachers & accountants
+- KPI cards: collected, grand total billed, outstanding, net
+- Monthly income/expense cash-flow chart
+- Payment method distribution (pie)
+- Outstanding & student enrolment by class (bar)
+- Exam performance & marks distribution by latest exam
 
-#### **FUNCTIONS OF ACCOUNTS** 
+### In-App Notifications
 
-**-- SUPER ADMIN**
-- Only Super Admin can delete any record
-- Create any user account
- 
-**-- Administrators (Super Admin & Admin)**
+- Bell dropdown in the header with live unread badge
+- Notification center page (mark read / mark all as read / delete)
+- Automatic notifications: payment received (student + parent), results published (exam), new assignment (class students)
 
-- Manage students class/sections
-- View marksheet of students
-- Create, Edit and manage all user accounts & profiles
-- Create, Edit and manage Exams & Grades
-- Create, Edit and manage Subjects
-- Manage noticeboard of school
-- Notices are visible in calendar in dashboard
-- Edit system settings
-- Manage Payments & fees
+### Student Information
 
-**-- ACCOUNTANT**
-- Manage Payments & fees
-- Print Payment Receipts
+- Student registration with admission number & unique ID
+- Student documents management (upload & download)
+- Discipline, health, transport, and activity records
+- Student status management (active/inactive/graduated)
+- Guardian linking & management
+- Student promotion & graduation tracking
 
-**-- LIBRARIAN**
-- Manage Books in the Library
+### Other Features
 
-**-- TEACHER**
-- Manage Own Class/Section
-- Manage Exam Records for own Subjects
-- Manage Timetable if Assigned as Class Teacher
-- Manage own profile
-- Upload Study Materials
+- Time table management with reusable time slots
+- Library book management & book request system
+- Noticeboard & event calendar on dashboard
+- PIN-based mark verification
+- Role-based permissions system
+- Activity logging & audit trail
+- System settings (school name, session, currency, logo, etc.)
 
-**-- STUDENT**
-- View teacher profile
-- View own class subjects
-- View own marks and class timetable
-- View Payments
-- View library and book status
-- View noticeboard and school events in calendar
-- Manage own profile
+---
 
-**-- PARENT**
-- View teacher profile
-- View own child's marksheet (Download/Print PDF)
-- View own child's Timetable
-- View own child's payments
-- View noticeboard and school events in calendar
-- Manage own profile
+## Tech Stack
 
-### **Contributing**
+| Layer | Technology |
+|-------|-----------|
+| Backend | Laravel 8 (PHP ^7.2 \| ^8.0) |
+| Frontend | Bootstrap 4, Vue.js 2, jQuery |
+| Database | MySQL |
+| PDF Generation | barryvdh/laravel-dompdf |
+| Asset Compilation | Laravel Mix (Webpack) |
+| Hashing | hashids/hashids |
+| Auth | Laravel UI (Bootstrap scaffolding) |
 
-Your Contributions & suggestions are welcomed. Please use Pull Request
+---
 
-### **Security Vulnerabilities**
+## Requirements
 
-If you discover a security vulnerability within LAV_SMS, please send an e-mail to CJ Inspired via cjay.pub@gmail.com. All security vulnerabilities will be promptly addressed.
+- PHP >= 7.2 or >= 8.0
+- MySQL >= 5.7
+- Composer
+- Node.js & NPM
+- XAMPP / Laravel Homestead / Valet (or any PHP server environment)
 
-***Please Note*** that some sections of this project are in the work-in-progress stage and would be updated soon. These include:
+See the full [Laravel 8 server requirements](https://laravel.com/docs/8.x/installation#server-requirements).
 
-- The Noticeboard/Calendar in the Dashboard Area
-- Librarian/Acountant user pages
-- Library Resources/Study Materials Upload for Students
+---
 
-### **Contact [CJ INSPIRED]**
-- Phone : +2347068149559
+## Installation
+
+1. **Clone the repository**
+
+```bash
+git clone <repository-url>
+cd "School Management System"
+```
+
+2. **Install PHP dependencies**
+
+```bash
+composer install
+```
+
+3. **Install frontend dependencies**
+
+```bash
+npm install
+```
+
+4. **Create environment file**
+
+```bash
+cp .env.example .env
+```
+
+5. **Configure `.env`** with your database credentials and app settings:
+
+```env
+APP_NAME="School Management System"
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=school_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+6. **Generate application key**
+
+```bash
+php artisan key:generate
+```
+
+7. **Run database migrations**
+
+```bash
+php artisan migrate
+```
+
+8. **Seed the database** (creates default users and sample data)
+
+```bash
+php artisan db:seed
+```
+
+9. **Compile frontend assets**
+
+```bash
+npm run dev
+```
+
+10. **Start the development server**
+
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000` in your browser.
+
+---
+
+## Default Login Credentials
+
+After seeding, use any of the following accounts to log in:
+
+| Account Type | Username | Email | Password |
+|-------------|----------|-------|----------|
+| Super Admin | `cj` | `cj@cj.com` | `cj` |
+| Admin | `admin` | `admin@admin.com` | `cj` |
+| Teacher | `teacher` | `teacher@teacher.com` | `cj` |
+| Student | `student` | `student@student.com` | `cj` |
+| Parent | `parent` | `parent@parent.com` | `cj` |
+| Accountant | `accountant` | `accountant@accountant.com` | `cj` |
+| Librarian | `librarian` | `librarian@librarian.com` | `cj` |
+
+> **Important:** Change these default credentials before deploying to production.
+
+---
+
+## Configuring M-Pesa (Daraja)
+
+1. Register an app at the [Safaricom Daraja Portal](https://developer.safaricom.co.ke) to get your **Consumer Key**, **Consumer Secret**, and **Passkey**.
+2. In the app, go to **Finance → Settings → M-Pesa (Daraja) Settings** and enter:
+   - `Environment` — `sandbox` for testing (use test credentials) or `live`
+   - `Shortcode / Paybill`, `Consumer Key`, `Consumer Secret`, `Passkey`
+   - `Callback URL` — must be publicly reachable (e.g. `https://your-domain.com/finance/mpesa/callback`). Use a tool like ngrok while testing locally.
+   - `Account Reference` (max 12 characters)
+3. Save, then open **Finance → Payments** and click **Pay via M-Pesa** to send an STK push to the payer's phone.
+4. Track requests under the **M-Pesa** tab (Finance → M-Pesa Transactions); successful callbacks automatically create the payment, update the student fee, and generate a receipt.
+
+> Live paybills require your callback URL to be registered with Safaricom before going live.
+
+---
+
+## Project Structure
+
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── SupportTeam/        # Controllers for admin/teacher/shared roles
+│   │   ├── SuperAdmin/         # System settings controller
+│   │   └── MyParent/           # Parent-specific controller
+│   └── Middleware/              # Custom role-based middleware
+├── Models/                     # Eloquent models (53 models)
+├── Repositories/               # Repository pattern layer
+└── Helpers/                    # Utility helpers
+
+database/
+├── migrations/                 # 50 migration files
+└── seeders/                    # Database seeders
+
+resources/
+├── views/                      # Blade templates
+└── js/                         # Vue components & JS
+
+routes/
+└── web.php                     # All web routes
+```
+
+---
+
+## Testing
+
+```bash
+php artisan test
+```
+
+Or with PHPUnit directly:
+
+```bash
+./vendor/bin/phpunit
+```
+
+---
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability, please report it responsibly. Do not open public GitHub issues for security-related concerns.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Created by **Solitech International** — Solomon Muturi

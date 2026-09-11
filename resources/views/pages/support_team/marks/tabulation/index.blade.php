@@ -23,10 +23,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="my_class_id" class="col-form-label font-weight-bold">Class:</label>
-                                            <select onchange="getClassSections(this.value)" required id="my_class_id" name="my_class_id" class="form-control select" data-placeholder="Select Class">
+                                            <select required id="my_class_id" name="my_class_id" class="form-control select" data-placeholder="Select Class">
                                                 <option value=""></option>
                                                 @foreach($my_classes as $c)
                                                     <option {{ ($selected && $my_class_id == $c->id) ? 'selected' : '' }} value="{{ $c->id }}">{{ $c->name }}</option>
@@ -35,23 +35,9 @@
                                         </div>
                                     </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="section_id" class="col-form-label font-weight-bold">Section:</label>
-                                <select required id="section_id" name="section_id" data-placeholder="Select Class First" class="form-control select">
-                                    @if($selected)
-                                        @foreach($sections->where('my_class_id', $my_class_id) as $s)
-                                            <option {{ $section_id == $s->id ? 'selected' : '' }} value="{{ $s->id }}">{{ $s->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-2 mt-4">
+                        <div class="col-md-4 mt-4">
                             <div class="text-right mt-1">
-                                <button type="submit" class="btn btn-primary">View Sheet <i class="icon-paperplane ml-2"></i></button>
+                                <button type="submit" class="btn btn-primary">View Sheet</button>
                             </div>
                         </div>
 
@@ -66,7 +52,7 @@
     @if($selected)
         <div class="card">
             <div class="card-header">
-                <h6 class="card-title font-weight-bold">Tabulation Sheet for {{ $my_class->name.' '.$section->name.' - '.$ex->name.' ('.$year.')' }}</h6>
+                <h6 class="card-title font-weight-bold">Tabulation Sheet for {{ $my_class->name.' - '.$ex->name.' ('.$year.')' }}</h6>
             </div>
             <div class="card-body">
                 <table class="table table-responsive table-striped">
@@ -116,7 +102,8 @@
                 </table>
                 {{--Print Button--}}
                 <div class="text-center mt-4">
-                    <a target="_blank" href="{{  route('marks.print_tabulation', [$exam_id, $my_class_id, $section_id]) }}" class="btn btn-danger btn-lg"><i class="icon-printer mr-2"></i> Print Tabulation Sheet</a>
+                    <a href="{{  route('marks.print_tabulation', [$exam_id, $my_class_id]) }}" class="btn btn-secondary btn-lg mr-2"><i class="icon-printer mr-2"></i> View Print Layout</a>
+                    <a href="{{  route('marks.print_tabulation', [$exam_id, $my_class_id]) }}?download=1" class="btn btn-danger btn-lg"><i class="icon-file-download mr-2"></i> Download Tabulation</a>
                 </div>
             </div>
         </div>

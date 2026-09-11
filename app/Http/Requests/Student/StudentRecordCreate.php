@@ -34,19 +34,18 @@ class StudentRecordCreate extends FormRequest
             'lga_id' => 'required',
             'nal_id' => 'required',
             'my_class_id' => 'required',
-            'section_id' => 'required',
             'my_parent_id' => 'sometimes|nullable',
-            'dorm_id' => 'sometimes|nullable',
+            'status' => 'sometimes|nullable|in:active,inactive,graduated,transferred,suspended,withdrawn',
+            'admission_date' => 'sometimes|nullable|date',
+            'previous_school' => 'sometimes|nullable|string|max:150',
         ];
     }
 
     public function attributes()
     {
         return  [
-            'section_id' => 'Section',
             'nal_id' => 'Nationality',
             'my_class_id' => 'Class',
-            'dorm_id' => 'Dormitory',
             'state_id' => 'State',
             'lga_id' => 'LGA',
             'bg_id' => 'Blood Group',

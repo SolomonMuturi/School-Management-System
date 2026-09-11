@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="add-sub">
+﻿<div class="tab-pane fade" id="add-sub">
     <div class="col-md-8">
         <form class="ajax-store" method="post" action="{{ route('tt.store') }}">
             @csrf <input name="ttr_id" value="{{ $ttr->id }}" type="hidden">
@@ -67,7 +67,7 @@
 
 
             <div class="text-right">
-                <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
     </div>

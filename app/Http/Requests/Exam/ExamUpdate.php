@@ -21,6 +21,10 @@ class ExamUpdate extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'type' => 'sometimes|nullable|string|max:30',
+            'start_date' => 'sometimes|nullable|date',
+            'end_date' => 'sometimes|nullable|date|after_or_equal:start_date',
+            'status' => 'sometimes|nullable|string|in:pending,published,closed',
             'term' => 'required|numeric',
         ];
     }

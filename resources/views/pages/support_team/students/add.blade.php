@@ -32,7 +32,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Email address: </label>
-                                <input type="email" value="{{ old('email') }}" name="email" class="form-control" placeholder="Email Address">
+                                <input type="email" value="{{ old('email') }}" name="email" class="form-control" placeholder="Email Address" {{ in_array('email', $required_fields) ? 'required' : '' }}>
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Phone:</label>
-                                <input value="{{ old('phone') }}" type="text" name="phone" class="form-control" placeholder="" >
+                                <input value="{{ old('phone') }}" type="text" name="phone" class="form-control" placeholder="" {{ in_array('phone', $required_fields) ? 'required' : '' }}>
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Date of Birth:</label>
-                                <input name="dob" value="{{ old('dob') }}" type="text" class="form-control date-pick" placeholder="Select Date...">
+                                <input name="dob" value="{{ old('dob') }}" type="text" class="form-control date-pick" placeholder="Select Date..." {{ in_array('dob', $required_fields) ? 'required' : '' }}>
 
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="bg_id">Blood Group: </label>
-                                <select class="select form-control" id="bg_id" name="bg_id" data-fouc data-placeholder="Choose..">
+                                <select class="select form-control" id="bg_id" name="bg_id" data-fouc data-placeholder="Choose.." {{ in_array('bg_id', $required_fields) ? 'required' : '' }}>
                                     <option value=""></option>
                                     @foreach(App\Models\BloodGroup::all() as $bg)
                                         <option {{ (old('bg_id') == $bg->id ? 'selected' : '') }} value="{{ $bg->id }}">{{ $bg->name }}</option>
@@ -132,7 +132,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="my_class_id">Class: <span class="text-danger">*</span></label>
-                                <select onchange="getClassSections(this.value)" data-placeholder="Choose..." required name="my_class_id" id="my_class_id" class="select-search form-control">
+                                <select data-placeholder="Choose..." required name="my_class_id" id="my_class_id" class="select-search form-control">
                                     <option value=""></option>
                                     @foreach($my_classes as $c)
                                         <option {{ (old('my_class_id') == $c->id ? 'selected' : '') }} value="{{ $c->id }}">{{ $c->name }}</option>
@@ -140,15 +140,6 @@
                                 </select>
                         </div>
                             </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="section_id">Section: <span class="text-danger">*</span></label>
-                                <select data-placeholder="Select Class First" required name="section_id" id="section_id" class="select-search form-control">
-                                    <option {{ (old('section_id')) ? 'selected' : '' }} value="{{ old('section_id') }}">{{ (old('section_id')) ? 'Selected' : '' }}</option>
-                                </select>
-                            </div>
-                        </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -177,24 +168,6 @@
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label for="dorm_id">Dormitory: </label>
-                            <select data-placeholder="Choose..."  name="dorm_id" id="dorm_id" class="select-search form-control">
-                                <option value=""></option>
-                                @foreach($dorms as $d)
-                                    <option {{ (old('dorm_id') == $d->id) ? 'selected' : '' }} value="{{ $d->id }}">{{ $d->name }}</option>
-                                    @endforeach
-                            </select>
-
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Dormitory Room No:</label>
-                                <input type="text" name="dorm_room_no" placeholder="Dormitory Room No" class="form-control" value="{{ old('dorm_room_no') }}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Sport House:</label>
                                 <input type="text" name="house" placeholder="Sport House" class="form-control" value="{{ old('house') }}">
@@ -205,6 +178,20 @@
                             <div class="form-group">
                                 <label>Admission Number:</label>
                                 <input type="text" name="adm_no" placeholder="Admission Number" class="form-control" value="{{ old('adm_no') }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Admission Date:</label>
+                                <input type="date" name="admission_date" class="form-control" value="{{ old('admission_date') }}" {{ in_array('admission_date', $required_fields) ? 'required' : '' }}>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Previous School:</label>
+                                <input type="text" name="previous_school" placeholder="Previous School (if any)" class="form-control" value="{{ old('previous_school') }}" {{ in_array('previous_school', $required_fields) ? 'required' : '' }}>
                             </div>
                         </div>
                     </div>

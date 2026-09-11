@@ -37,6 +37,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\Custom\LogActivity::class,
+            \App\Http\Middleware\Custom\HandleInactivity::class,
         ],
 
         'api' => [
@@ -66,8 +68,10 @@ class Kernel extends HttpKernel
         'super_admin' => \App\Http\Middleware\Custom\SuperAdmin::class,
         'teamSA' => \App\Http\Middleware\Custom\TeamSA::class,
         'teamSAT' => \App\Http\Middleware\Custom\TeamSAT::class,
+        'teamAcademic' => \App\Http\Middleware\Custom\TeamAcademic::class,
         'teamAccount' => \App\Http\Middleware\Custom\TeamAccount::class,
         'examIsLocked' => \App\Http\Middleware\Custom\ExamIsLocked::class,
+        'perm' => \App\Http\Middleware\Custom\Perm::class,
         'my_parent' => \App\Http\Middleware\Custom\MyParent::class,
     ];
 }

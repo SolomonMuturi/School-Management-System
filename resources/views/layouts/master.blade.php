@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta id="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="author" content="CJ Inspired">
+    <meta name="author" content="MySchool">
 
-    <title> @yield('page_title') | {{ config('app.name') }} </title>
+    <title>{{ config('app.name') }}</title>
 
     @include('partials.inc_top')
 </head>
 
-<body class="{{ in_array(Route::currentRouteName(), ['payments.invoice', 'marks.tabulation', 'marks.show', 'ttr.manage', 'ttr.show']) ? 'sidebar-xs' : '' }}">
+<body class="{{ in_array(Route::currentRouteName(), ['marks.tabulation', 'marks.show', 'ttr.manage', 'ttr.show']) ? 'sidebar-xs' : '' }}">
 
 @include('partials.top_menu')
 <div class="page-content">
@@ -24,7 +24,7 @@
         <div class="content">
             {{--Error Alert Area--}}
             @if($errors->any())
-                <div class="alert alert-danger border-0 alert-dismissible">
+                <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
 
                         @foreach($errors->all() as $er)

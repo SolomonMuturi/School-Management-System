@@ -69,12 +69,26 @@
                                 </thead>
                                 <tbody>
                                 @foreach($used_pins as $up)
+                                    @php
+                                        $u_sr = Qs::getSRByUserID($up->user->id);
+                                        $s_sr = Qs::getSRByUserID($up->student->id);
+                                    @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $up->code }}</td>
-                                        <td><a href="{{ $up->user->user_type == 'student' ? route('students.show', Qs::hash(Qs::getSRByUserID($up->user->id)->id)) : route('users.show', Qs::hash($up->user->id)) }}">{{ $up->user->name }}</a></td>
+                                        <td>@if($up->user->user_type == 'student' && $u_sr)
+                                                <a href="{{ route('students.show', Qs::hash($u_sr->id)) }}">{{ $up->user->name }}</a>
+                                            @else
+                                                <a href="{{ route('users.show', Qs::hash($up->user->id)) }}">{{ $up->user->name }}</a>
+                                            @endif
+                                        </td>
                                         <td>{{ $up->user->user_type }}</td>
-                                        <td><a href="{{ route('students.show', Qs::hash(Qs::getSRByUserID($up->student->id)->id))  }}">{{ $up->student->name }}</a></td>
+                                        <td>@if($s_sr)
+                                                <a href="{{ route('students.show', Qs::hash($s_sr->id)) }}">{{ $up->student->name }}</a>
+                                            @else
+                                                {{ $up->student->name }}
+                                            @endif
+                                        </td>
                                         <td>{{ $up->updated_at }}</td>
                                     </tr>
                                 @endforeach

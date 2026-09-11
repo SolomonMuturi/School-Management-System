@@ -20,7 +20,7 @@
                             <p>{{ $app_name }} ("We") respects your privacy and is committed to protecting it through our compliance with this policy.</p>
 
                             <p>This policy describes the types of information we may collect from you or that you may provide when you visit the website
-                                <a target="_blank" href="{{ $app_url }}">{{ $app_url }}</a> (our "Website") and our practices for collecting, using, maintaining, protecting, and disclosing that information.</p>
+                                <a href="{{ $app_url }}">{{ $app_url }}</a> (our "Website") and our practices for collecting, using, maintaining, protecting, and disclosing that information.</p>
 
                             <p>This policy applies to information we collect:</p>
 
@@ -111,7 +111,7 @@
 
                             <ul>
                                 <li>To comply with any court order, law, or legal process, including to respond to any government or regulatory request.</li>
-                                <li>To enforce or apply our <a target="_blank" href="{{ route('terms_of_use') }}">Terms of Use</a>.</li>
+                                <li>To enforce or apply our <a href="{{ route('terms_of_use') }}">Terms of Use</a>.</li>
                                 <li>If we believe disclosure is necessary or appropriate to protect our rights, property, or safety of our students or others.</li>
                             </ul>
 

@@ -1,4 +1,4 @@
-<div class="row">
+﻿<div class="row">
     <div class="col-md-12">
         <div class="alert alert-info text-center">
             <span>You can Add New Time Slots or Choose To Use Existing Time Slots of Another Timetable. <strong>NB:</strong> Using Exisiting Time Slots Resets The Current Timetable</span>
@@ -98,7 +98,7 @@
 
 
                         <div class="text-right">
-                            <button  type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                            <button  type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -136,7 +136,7 @@
                         </div>
 
                         <div class="text-right">
-                            <button type="submit" class="btn btn-lg btn-success">Submit form <i class="icon-paperplane ml-2"></i></button>
+                            <button type="submit" class="btn btn-lg btn-success">Save</button>
                         </div>
                     </form>
                 </div>

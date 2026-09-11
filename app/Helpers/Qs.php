@@ -2,11 +2,13 @@
 
 namespace App\Helpers;
 
+use App\Models\RolePermission;
 use App\Models\Setting;
 use App\Models\StudentRecord;
 use App\Models\Subject;
 use Hashids\Hashids;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class Qs
 {
@@ -73,6 +75,105 @@ class Qs
         return ['admin', 'super_admin', 'teacher', 'student'];
     }
 
+    public static function getPermissionModules()
+    {
+        return [
+            'Students',
+            'Academics',
+            'Analytics',
+            'Users & Roles',
+            'Classes & Subjects',
+            'Exams & Marks',
+            'Timetables',
+            'Finance',
+            'Pins',
+            'System Settings',
+        ];
+    }
+
+    public static function getModuleRoleMap()
+    {
+        return [
+            'Students' => ['super_admin', 'admin', 'teacher'],
+            'Academics' => ['super_admin', 'admin', 'teacher', 'student'],
+            'Analytics' => ['super_admin', 'admin', 'accountant', 'teacher'],
+            'Users & Roles' => ['super_admin', 'admin'],
+            'Classes & Subjects' => ['super_admin', 'admin'],
+            'Exams & Marks' => ['super_admin', 'admin', 'teacher'],
+            'Timetables' => ['super_admin', 'admin', 'teacher'],
+            'Finance' => ['super_admin', 'admin', 'accountant'],
+            'Pins' => ['super_admin'],
+            'System Settings' => ['super_admin'],
+        ];
+    }
+
+    public static function defaultRolePermissions($role)
+    {
+        $granted = [];
+        foreach (self::getModuleRoleMap() as $module => $roles) {
+            if (in_array($role, $roles, true)) {
+                $granted[] = $module;
+            }
+        }
+        return $granted;
+    }
+
+    public static function rolePermissions($role)
+    {
+        $key = 'perms_' . $role;
+        $data = Cache::get($key);
+
+        if (is_null($data)) {
+            $rows = RolePermission::where('role', $role)->get(['module', 'allowed']);
+            $stored = $rows->pluck('allowed', 'module')->toArray();
+            $merged = [];
+            foreach (self::getModuleRoleMap() as $module => $moduleRoles) {
+                if (array_key_exists($module, $stored)) {
+                    if ($stored[$module]) {
+                        $merged[] = $module;
+                    }
+                } elseif (in_array($role, $moduleRoles, true)) {
+                    $merged[] = $module;
+                }
+            }
+            $data = $merged ?: self::defaultRolePermissions($role);
+            Cache::put($key, $data, now()->addHours(2));
+        }
+
+        return $data;
+    }
+
+    public static function canAccess($module)
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+        if (self::getUserType() === 'super_admin') {
+            return true;
+        }
+        return in_array($module, self::rolePermissions(self::getUserType()), true);
+    }
+
+    public static function userIsTeamAccount()
+    {
+        return self::canAccess('Finance');
+    }
+
+    public static function userIsTeamSA()
+    {
+        return self::canAccess('Users & Roles') || self::canAccess('Classes & Subjects');
+    }
+
+    public static function userIsTeamSAT()
+    {
+        return self::canAccess('Students') || self::canAccess('Exams & Marks') || self::canAccess('Timetables');
+    }
+
+    public static function userIsAcademic()
+    {
+        return self::canAccess('Academics');
+    }
+
     public static function getTeamAdministrative()
     {
         return ['admin', 'super_admin', 'accountant'];
@@ -101,7 +202,7 @@ class Qs
 
     public static function getStudentData($remove = [])
     {
-        $data = ['my_class_id', 'section_id', 'my_parent_id', 'dorm_id', 'dorm_room_no', 'year_admitted', 'house', 'age'];
+        $data = ['my_class_id', 'my_parent_id', 'year_admitted', 'house', 'age'];
 
         return $remove ? array_values(array_diff($data, $remove)) : $data;
 
@@ -113,31 +214,6 @@ class Qs
         $hash = new Hashids($date, 14);
         $decoded = $hash->decode($str);
         return $toString ? implode(',', $decoded) : $decoded;
-    }
-
-    public static function userIsTeamAccount()
-    {
-        return in_array(Auth::user()->user_type, self::getTeamAccount());
-    }
-
-    public static function userIsTeamSA()
-    {
-        return in_array(Auth::user()->user_type, self::getTeamSA());
-    }
-
-    public static function userIsTeamSAT()
-    {
-        return in_array(Auth::user()->user_type, self::getTeamSAT());
-    }
-
-    public static function userIsAcademic()
-    {
-        return in_array(Auth::user()->user_type, self::getTeamAcademic());
-    }
-
-    public static function userIsAdministrative()
-    {
-        return in_array(Auth::user()->user_type, self::getTeamAdministrative());
     }
 
     public static function userIsAdmin()
@@ -258,7 +334,21 @@ class Qs
 
     public static function getSetting($type)
     {
-        return Setting::where('type', $type)->first()->description;
+        static $cache = [];
+        if (!array_key_exists($type, $cache)) {
+            $cache[$type] = Setting::where('type', $type)->value('description');
+        }
+        return $cache[$type];
+    }
+
+    public static function getPdfLogoDataUri()
+    {
+        $path = public_path('global_assets/images/favicon.png');
+        if (!is_file($path)) {
+            return null;
+        }
+        $mime = mime_content_type($path) ?: 'image/png';
+        return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($path));
     }
 
     public static function getCurrentSession()
@@ -269,8 +359,10 @@ class Qs
     public static function getNextSession()
     {
         $oy = self::getCurrentSession();
-        $old_yr = explode('-', $oy);
-        return ++$old_yr[0].'-'.++$old_yr[1];
+        if (preg_match('/^(\d{4})[-\/](\d{4})$/', $oy, $m)) {
+            return ($m[1] + 1) . '-' . ($m[2] + 1);
+        }
+        return (string) ((int) $oy + 1);
     }
 
     public static function getSystemName()

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Enter PIN')
 @section('content')
     <div class="card">
@@ -18,7 +18,7 @@
                         </div>
 
                         <div class="text-center mt-2">
-                            <button type="submit" class="btn btn-danger btn-lg">Submit <i class="icon-paperplane ml-2"></i></button>
+                            <button type="submit" class="btn btn-danger btn-lg">Save</button>
                         </div>
 
                     </form>

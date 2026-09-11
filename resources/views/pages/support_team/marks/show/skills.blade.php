@@ -1,4 +1,4 @@
-<div class="row">
+﻿<div class="row">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header header-elements-inline bg-danger">
@@ -27,7 +27,7 @@
 
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -61,7 +61,7 @@
 
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

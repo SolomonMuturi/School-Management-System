@@ -40,7 +40,7 @@
                 </table>
                 {{--Print Button--}}
                 <div class="text-center mt-4">
-                    <a target="_blank" href="{{ route('ttr.print', $ttr->id) }}" class="btn btn-danger btn-lg"><i class="icon-printer mr-2"></i> Print Timetable</a>
+                    <a href="{{ route('ttr.print', $ttr->id) }}" class="btn btn-danger btn-lg"><i class="icon-file-download mr-2"></i> Download Timetable</a>
                 </div>
             </div>
         </div>

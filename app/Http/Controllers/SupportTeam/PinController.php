@@ -21,7 +21,7 @@ class PinController extends Controller
         $this->pin = $pin;
         $this->user = $user;
         $this->middleware('examIsLocked');
-        $this->middleware('teamSA', ['except' => ['verify', 'enter_pin'] ]);
+        $this->middleware('perm:Pins', ['except' => ['verify', 'enter_pin'] ]);
     }
 
     public function index()
@@ -47,6 +47,8 @@ class PinController extends Controller
             return redirect(route('dashboard'));
         }
 
+        $student_id = $this->decodeStudentId($student_id);
+
         if($this->checkPinVerified($student_id))
         {
             return Session::has('marks_url') ? redirect(Session::get('marks_url')) : redirect()->route('dashboard');
@@ -59,6 +61,7 @@ class PinController extends Controller
     public function verify(PinVerify $req, $student_id)
     {
         $user = Auth::user();
+        $student_id = $this->decodeStudentId($student_id);
         $code = $this->pin->findValidCode($req->pin_code);
         if($code->count() < 1){
             $code = $this->pin->getUserPin($req->pin_code, $user->id, $student_id);

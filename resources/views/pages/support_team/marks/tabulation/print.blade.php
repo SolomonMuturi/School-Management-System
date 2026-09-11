@@ -1,7 +1,9 @@
 <html>
 <head>
-    <title>Tabulation Sheet - {{ $my_class->name.' '.$section->name.' - '.$ex->name.' ('.$year.')' }}</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/print_tabulation.css') }}" />
+    <title>Tabulation Sheet - {{ $my_class->name.' - '.$ex->name.' ('.$year.')' }}</title>
+    @if(!isset($pdf) || !$pdf)
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/print_tabulation.css') }}" />
+    @endif
 </head>
 <body>
 <div class="container">
@@ -9,25 +11,36 @@
         {{--    Logo N School Details--}}
         <table width="100%">
             <tr>
-                {{--<td><img src="{{ $s['logo'] }}" style="max-height : 100px;"></td>--}}
-
-                <td >
+                @if(isset($pdf) && $pdf)
+                    <td style="text-align: center;">
+                        @if($pdf_logo = Qs::getPdfLogoDataUri())
+                            <img src="{{ $pdf_logo }}" style="max-height:70px; max-width:180px; margin-bottom:4px;">
+                        @endif
+                        <strong><span style="color: #1b0c80; font-size: 25px;">{{ strtoupper(Qs::getSetting('system_name')) }}</span></strong><br/>
+                        <strong><span style="color: #000; font-size: 15px;"><i>{{ ucwords($s['address']) }}</i></span></strong><br/>
+                        <strong><span style="color: #000; font-size: 15px;"> TABULATION SHEET FOR {{ strtoupper($my_class->name.' - '.$ex->name.' ('.$year.')' ) }}
+                    </span></strong>
+                    </td>
+                @else
+                <td>
                     <strong><span style="color: #1b0c80; font-size: 25px;">{{ strtoupper(Qs::getSetting('system_name')) }}</span></strong><br/>
-                    {{-- <strong><span style="color: #1b0c80; font-size: 20px;">MINNA, NIGER STATE</span></strong><br/>--}}
                     <strong><span
                                 style="color: #000; font-size: 15px;"><i>{{ ucwords($s['address']) }}</i></span></strong><br/>
-                    <strong><span style="color: #000; font-size: 15px;"> TABULATION SHEET FOR {{ strtoupper($my_class->name.' '.$section->name.' - '.$ex->name.' ('.$year.')' ) }}
+                    <strong><span style="color: #000; font-size: 15px;"> TABULATION SHEET FOR {{ strtoupper($my_class->name.' - '.$ex->name.' ('.$year.')' ) }}
                     </span></strong>
                 </td>
+                @endif
             </tr>
         </table>
         <br/>
 
+        @if(!isset($pdf) || !$pdf)
         {{--Background Logo--}}
         <div style="position: relative;  text-align: center; ">
             <img src="{{ $s['logo'] }}"
                  style="max-width: 500px; max-height:600px; margin-top: 60px; position:absolute ; opacity: 0.2; margin-left: auto;margin-right: auto; left: 0; right: 0;" />
         </div>
+        @endif
 
         {{-- Tabulation Begins --}}
         <table style="width:100%; border-collapse:collapse; border: 1px solid #000; margin: 10px auto;" border="1">

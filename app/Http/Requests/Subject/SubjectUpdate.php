@@ -22,9 +22,12 @@ class SubjectUpdate extends FormRequest
     {
         return [
             'name' => 'required|string|min:3',
+            'code' => 'sometimes|nullable|string|max:30',
             'my_class_id' => 'required',
             'teacher_id' => 'sometimes|nullable|exists:users,id',
             'slug' => 'nullable|string|min:3',
+            'description' => 'sometimes|nullable|string',
+            'status' => 'sometimes|nullable|string|in:active,inactive',
         ];
     }
 
@@ -34,6 +37,7 @@ class SubjectUpdate extends FormRequest
             'my_class_id' => 'Class',
             'teacher_id' => 'Teacher',
             'slug' => 'Short Name',
+            'code' => 'Subject Code',
         ];
     }
 

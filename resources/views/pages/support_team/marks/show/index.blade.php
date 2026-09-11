@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-header text-center">
-            <h4 class="card-title font-weight-bold">Student Marksheet for =>  {{ $sr->user->name.' ('.$my_class->name.' '.$my_class->section->first()->name.')' }} </h4>
+            <h4 class="card-title font-weight-bold">Student Marksheet for =>  {{ $sr->user->name.' ('.$my_class->name.')' }} </h4>
         </div>
     </div>
 
@@ -24,7 +24,8 @@
 
                         {{--Print Button--}}
                         <div class="text-center mt-3">
-                            <a target="_blank" href="{{ route('marks.print', [Qs::hash($student_id), $ex->id, $year]) }}" class="btn btn-secondary btn-lg">Print Marksheet <i class="icon-printer ml-2"></i></a>
+                            <a href="{{ route('marks.print', [Qs::hash($student_id), $ex->id, $year]) }}" class="btn btn-secondary btn-lg"><i class="icon-printer mr-2"></i>View Print Layout</a>
+                            <a href="{{ route('marks.print', [Qs::hash($student_id), $ex->id, $year]) }}?download=1" class="btn btn-primary btn-lg"><i class="icon-file-download mr-2"></i>Download Marksheet</a>
                         </div>
 
                     </div>

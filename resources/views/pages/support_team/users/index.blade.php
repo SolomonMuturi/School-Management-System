@@ -9,6 +9,19 @@
         </div>
 
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <a href="{{ route('users.dashboard') }}" class="btn btn-outline-primary btn-sm">Open Dashboard</a>
+                </div>
+                <div class="col-md-4">
+                    <select id="user-status-filter" class="form-control select">
+                        <option value="">Filter by Status (All)</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+
             <ul class="nav nav-tabs nav-tabs-highlight">
                 <li class="nav-item"><a href="#new-user" class="nav-link active" data-toggle="tab">Create New User</a></li>
                 <li class="nav-item dropdown">
@@ -32,8 +45,8 @@
                                     <div class="form-group">
                                         <label for="user_type"> Select User: <span class="text-danger">*</span></label>
                                         <select required data-placeholder="Select User" class="form-control select" name="user_type" id="user_type">
-                                @foreach($user_types as $ut)
-                                    <option value="{{ Qs::hash($ut->id) }}">{{ $ut->name }}</option>
+                                @foreach($active_types as $ut)
+                                    <option data-title="{{ $ut->title }}" value="{{ Qs::hash($ut->id) }}">{{ $ut->name }}</option>
                                 @endforeach
                                         </select>
                                     </div>
@@ -50,6 +63,19 @@
                                     <div class="form-group">
                                         <label>Address: <span class="text-danger">*</span></label>
                                         <input value="{{ old('address') }}" class="form-control" placeholder="Address" name="address" type="text" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="parentStudentsWrap" style="display:none;">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Link Students (Parents only):</label>
+                                        <select name="students[]" id="parentStudents" class="select-search form-control" multiple data-placeholder="Select students to link to this parent...">
+                                            @foreach($students as $sr)
+                                                <option value="{{ $sr->id }}">{{ $sr->user ? $sr->user->name . ' ('.$sr->adm_no.')' : 'Student #'.$sr->id }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -186,18 +212,24 @@
                                 <th>Username</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Created</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($users->where('user_type', $ut->title) as $u)
-                                <tr>
+                                <tr data-status="{{ $u->status ?: 'active' }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td><img class="rounded-circle" style="height: 40px; width: 40px;" src="{{ $u->photo }}" alt="photo"></td>
                                     <td>{{ $u->name }}</td>
                                     <td>{{ $u->username }}</td>
                                     <td>{{ $u->phone }}</td>
                                     <td>{{ $u->email }}</td>
+                                    <td><span class="badge {{ $u->status == 'active' || !$u->status ? 'badge-success' : 'badge-secondary' }}">{{ $u->status ?: 'active' }}</span></td>
+                                    <td>{{ $u->last_login ? $u->last_login->format('d M, Y H:i') : '-' }}</td>
+                                    <td>{{ $u->created_at ? $u->created_at->format('d M, Y') : '-' }}</td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="dropdown">
@@ -210,6 +242,11 @@
                                                     <a href="{{ route('users.show', Qs::hash($u->id)) }}" class="dropdown-item"><i class="icon-eye"></i> View Profile</a>
                                                     {{--Edit--}}
                                                     <a href="{{ route('users.edit', Qs::hash($u->id)) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit</a>
+                                                    @if(Qs::userIsTeamSA())
+                                                        <form method="post" action="{{ route('users.status', $u->id) }}">@csrf @method('put')
+                                                            <button type="submit" class="dropdown-item"><i class="icon-switch2"></i> {{ $u->status == 'active' ? 'Deactivate' : 'Activate' }}</button>
+                                                        </form>
+                                                    @endif
                                                 @if(Qs::userIsSuperAdmin())
 
                                                         <a href="{{ route('users.reset_pass', Qs::hash($u->id)) }}" class="dropdown-item"><i class="icon-lock"></i> Reset password</a>
@@ -232,6 +269,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function(){
+            $('#user-status-filter').on('change', function(){
+                var val = $(this).val();
+                $('.tab-pane table tbody tr').each(function(){
+                    if(!val || $(this).data('status') === val){
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+
+            $('#user_type').on('change', function(){
+                $('#parentStudentsWrap').toggle($(this).find(':selected').data('title') === 'parent');
+            });
+            if($('#user_type :selected').data('title') === 'parent'){
+                $('#parentStudentsWrap').show();
+            }
+        });
+    </script>
 
     {{--Student List Ends--}}
 

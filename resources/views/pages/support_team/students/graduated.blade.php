@@ -30,7 +30,6 @@
                         <th>Photo</th>
                         <th>Name</th>
                         <th>ADM_No</th>
-                        <th>Section</th>
                         <th>Grad Year</th>
                         <th>Action</th>
                     </tr>
@@ -42,7 +41,7 @@
                         <td><img class="rounded-circle" style="height: 40px; width: 40px;" src="{{ $s->user->photo }}" alt="photo"></td>
                         <td>{{ $s->user->name }}</td>
                         <td>{{ $s->adm_no }}</td>
-                        <td>{{ $s->my_class->name.' '.$s->section->name }}</td>
+                        <td>{{ $s->my_class->name }}</td>
                         <td>{{ $s->grad_date }}</td>
                         <td class="text-center">
                             <div class="list-icons">
@@ -62,7 +61,7 @@
                                             <form method="post" id="ng-{{ Qs::hash($s->id) }}" action="{{ route('st.not_graduated', Qs::hash($s->id)) }}" class="hidden">@csrf @method('put')</form>
                                         @endif
 
-                                        <a target="_blank" href="{{ route('marks.year_selector', Qs::hash($s->user->id)) }}" class="dropdown-item"><i class="icon-check"></i> Marksheet</a>
+                                        <a href="{{ route('marks.year_selector', Qs::hash($s->user->id)) }}" class="dropdown-item"><i class="icon-check"></i> Marksheet</a>
 
                                         {{--Delete--}}
                                         @if(Qs::userIsSuperAdmin())
@@ -87,7 +86,6 @@
                         <th>Photo</th>
                         <th>Name</th>
                         <th>ADM_No</th>
-                        <th>Section</th>
                         <th>Grad Year</th>
                         <th>Action</th>
                     </tr>
@@ -99,7 +97,7 @@
                             <td><img class="rounded-circle" style="height: 40px; width: 40px;" src="{{ $s->user->photo }}" alt="photo"></td>
                             <td>{{ $s->user->name }}</td>
                             <td>{{ $s->adm_no }}</td>
-                            <td>{{ $s->my_class->name.' '.$s->section->name }}</td>
+                            <td>{{ $s->my_class->name }}</td>
                             <td>{{ $s->grad_date }}</td>
                             <td class="text-center">
                                 <div class="list-icons">
@@ -119,7 +117,7 @@
                                                 <form method="post" id="ng-{{ Qs::hash($s->id) }}" action="{{ route('st.not_graduated', Qs::hash($s->id)) }}" class="hidden">@csrf @method('put')</form>
                                             @endif
 
-                                            <a target="_blank" href="{{ route('marks.year_selector', Qs::hash($s->user->id)) }}" class="dropdown-item"><i class="icon-check"></i> Marksheet</a>
+                                            <a href="{{ route('marks.year_selector', Qs::hash($s->user->id)) }}" class="dropdown-item"><i class="icon-check"></i> Marksheet</a>
 
                                             {{--Delete--}}
                                             @if(Qs::userIsSuperAdmin())

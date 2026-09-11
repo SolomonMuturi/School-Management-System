@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Manage Exams')
 @section('content')
 
@@ -9,6 +9,11 @@
         </div>
 
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <a href="{{ route('exams.dashboard') }}" class="btn btn-outline-primary btn-sm">Open Dashboard</a>
+                </div>
+            </div>
             <ul class="nav nav-tabs nav-tabs-highlight">
                 <li class="nav-item"><a href="#all-exams" class="nav-link active" data-toggle="tab">Manage Exam</a></li>
                 <li class="nav-item"><a href="#new-exam" class="nav-link" data-toggle="tab"><i class="icon-plus2"></i> Add Exam</a></li>
@@ -21,8 +26,10 @@
                             <tr>
                                 <th>S/N</th>
                                 <th>Name</th>
+                                <th>Type</th>
                                 <th>Term</th>
                                 <th>Session</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -31,8 +38,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $ex->name }}</td>
+                                    <td>{{ ucfirst($ex->type ?: 'term') }}</td>
                                     <td>{{ 'Term '.$ex->term }}</td>
                                     <td>{{ $ex->year }}</td>
+                                    <td><span class="badge {{ $ex->status == 'published' ? 'badge-success' : ($ex->status == 'closed' ? 'badge-secondary' : 'badge-warning') }}">{{ $ex->status ?: 'pending' }}</span></td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="dropdown">
@@ -41,6 +50,7 @@
                                                 </a>
 
                                                 <div class="dropdown-menu dropdown-menu-left">
+                                                    <a href="{{ route('exams.show', $ex->id) }}" class="dropdown-item"><i class="icon-eye"></i> View</a>
                                                     @if(Qs::userIsTeamSA())
                                                     {{--Edit--}}
                                                     <a href="{{ route('exams.edit', $ex->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit</a>
@@ -93,8 +103,34 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label for="type" class="col-lg-3 col-form-label font-weight-semibold">Exam Type</label>
+                                    <div class="col-lg-9">
+                                        <select data-placeholder="Select Exam Type" class="form-control select-search" name="type" id="type">
+                                            <option {{ old('type') == 'term' || !old('type') ? 'selected' : '' }} value="term">Terminal Exam</option>
+                                            <option {{ old('type') == 'midterm' ? 'selected' : '' }} value="midterm">Mid-Term Test</option>
+                                            <option {{ old('type') == 'mock' ? 'selected' : '' }} value="mock">Mock Exam</option>
+                                            <option {{ old('type') == 'final' ? 'selected' : '' }} value="final">Final Exam</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="start_date" class="col-lg-3 col-form-label font-weight-semibold">Start Date</label>
+                                    <div class="col-lg-9">
+                                        <input name="start_date" id="start_date" value="{{ old('start_date') }}" type="date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="end_date" class="col-lg-3 col-form-label font-weight-semibold">End Date</label>
+                                    <div class="col-lg-9">
+                                        <input name="end_date" id="end_date" value="{{ old('end_date') }}" type="date" class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </form>
                         </div>

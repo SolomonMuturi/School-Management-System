@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 @section('page_title', 'Manage TimeTables')
 @section('content')
 
@@ -63,7 +63,7 @@
 
 
                            <div class="text-right">
-                               <button id="ajax-btn" type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                               <button id="ajax-btn" type="submit" class="btn btn-primary">Save</button>
                            </div>
                        </form>
                    </div>

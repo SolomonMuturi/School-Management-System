@@ -22,32 +22,9 @@
         })
     }
 
-    function getClassSections(class_id, destination){
-        var url = '{{ route('get_class_sections', [':id']) }}';
-        url = url.replace(':id', class_id);
-        var section = destination ? $(destination) : $('#section_id');
-
-        $.ajax({
-            dataType: 'json',
-            url: url,
-            success: function (resp) {
-                //console.log(resp);
-                section.empty();
-                $.each(resp, function (i, data) {
-                    section.append($('<option>', {
-                        value: data.id,
-                        text: data.name
-                    }));
-                });
-
-            }
-        })
-    }
-
     function getClassSubjects(class_id){
         var url = '{{ route('get_class_subjects', [':id']) }}';
         url = url.replace(':id', class_id);
-        var section = $('#section_id');
         var subject = $('#subject_id');
 
         $.ajax({
@@ -55,14 +32,7 @@
             url: url,
             success: function (resp) {
                 console.log(resp);
-                section.empty();
                 subject.empty();
-                $.each(resp.sections, function (i, data) {
-                    section.append($('<option>', {
-                        value: data.id,
-                        text: data.name
-                    }));
-                });
                 $.each(resp.subjects, function (i, data) {
                     subject.append($('<option>', {
                         value: data.id,
@@ -230,6 +200,7 @@
             enableBtn(btn);
             formType == 'store' ? clearForm(form) : '';
             scrollTo('body');
+            form.data('page-reload') ? location.reload() : '';
             return resp;
         });
         req.fail(function(e){
@@ -254,8 +225,8 @@
     }
 
     function enableBtn(btn){
-        var btnText = btn.data('text') ? btn.data('text') : 'Submit Form';
-        btn.prop('disabled', false).html(btnText + '<i class="icon-paperplane ml-2"></i>');
+        var btnText = btn.data('text') ? btn.data('text') : 'Save';
+        btn.prop('disabled', false).html(btnText);
     }
 
     function displayAjaxErr(errors){
