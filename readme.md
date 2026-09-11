@@ -6,13 +6,25 @@ A full-featured school management system built with Laravel 8, designed for educ
 
 ## Screenshots
 
-| Dashboard | Login | Marksheet |
-|-----------|-------|-----------|
-| ![Dashboard](https://i.ibb.co/D4T0z6T/dashboard.png) | ![Login](https://i.ibb.co/Rh1Bfwk/login.png) | ![Marksheet](https://i.ibb.co/GCgv5ZR/marksheet.png) |
+| Dashboard | Login | My Account |
+|-----------|-------|------------|
+| ![Dashboard](public/global_assets/images/readmepics/11.png) | ![Login](public/global_assets/images/readmepics/1.png) | ![My Account](public/global_assets/images/readmepics/01.png) |
 
-| System Settings | Print Marksheet | Tabulation Sheet |
-|-----------------|-----------------|------------------|
-| ![Settings](https://i.ibb.co/Kmrhw69/system-settings.png) | ![Print](https://i.ibb.co/5c1GHCj/capture-20210530-115521-crop.png) | ![Tabulation](https://i.ibb.co/QmscPfn/capture-20210530-115802.png) |
+| Academic Dashboard | Administration Dashboard | Exam Dashboard |
+|--------------------|--------------------------|----------------|
+| ![Academic Dashboard](public/global_assets/images/readmepics/111.png) | ![Administration Dashboard](public/global_assets/images/readmepics/111122.png) | ![Exam Dashboard](public/global_assets/images/readmepics/1111111.png) |
+
+| All Students | Student Profile | Student Attendance |
+|--------------|-----------------|---------------------|
+| ![All Students](public/global_assets/images/readmepics/12.png) | ![Student Profile](public/global_assets/images/readmepics/121.png) | ![Student Attendance](public/global_assets/images/readmepics/1212.png) |
+
+| Classes and Grades | Manage Subjects | Subjects Dashboard |
+|--------------------|-----------------|---------------------|
+| ![Classes and Grades](public/global_assets/images/readmepics/1111.png) | ![Manage Subjects](public/global_assets/images/readmepics/11111.png) | ![Subjects Dashboard](public/global_assets/images/readmepics/111111.png) |
+
+| Teacher and Subject Assignment | Finance | Academic Years and Terms |
+|--------------------------------|---------|--------------------------|
+| ![Teacher and Subject Assignment](public/global_assets/images/readmepics/112.png) | ![Finance](public/global_assets/images/readmepics/12112.png) | ![Academic Years and Terms](public/global_assets/images/readmepics/11111111.png) |
 
 ---
 
@@ -272,9 +284,3 @@ Or with PHPUnit directly:
 If you discover a security vulnerability, please report it responsibly. Do not open public GitHub issues for security-related concerns.
 
 ---
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-Created by **Solitech International** — Solomon Muturi
